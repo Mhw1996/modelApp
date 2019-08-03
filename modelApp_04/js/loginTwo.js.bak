@@ -1,0 +1,172 @@
+var app = new Vue({
+  el: "#app",
+  data: {
+    tab: "lg", //lg 登录 rg 注册
+    show_ph: true, // 手机号登录
+    show_msg: false, // 短信登录
+    msg_code: "获取验证码", //
+    ph_num: "", //手机号
+    pass: "", // 密码
+    nickname: "", //注册昵称
+    parm: {}, //注册成功之后登录使用
+    code: "", //输入验证码
+    fail_login: false, // 登录失败显示框
+    fail_login_msg: '', // 登陆失败提示语
+  },
+  created() { },
+  methods: { 
+    /**
+     * 注册用户
+     */
+    BecomeUser() {
+      var that = this;
+      var data = {
+        customerinfo: {
+          // customer_password: that.pass,
+          customer_password: hex_md5(that.pass),
+          customer_tel: that.ph_num,
+          customer_nickname: that.nickname,
+          customer_name: that.nickname,
+          verification_code: that.code
+        }
+      };
+      console.log(data);
+      this.parm = data;
+      pub._Init(that, pub.url, "addCustomer", data, that.BackBecomeUser);
+    },
+
+    /**
+     * 注册用户的回调
+     */
+    BackBecomeUser(res) {
+      var that = this;
+      console.log("注册用户的回调", res);
+      if (res.stateCode == "200") {
+        console.log("注册成功，执行登录事件");
+        var data = {
+          login_type: "login_account",
+          customer_tel: that.ph_num,
+          // customer_password: that.pass,
+          customer_password: hex_md5(that.pass)
+          // customer_last_login_ip: returnCitySN.cip
+        };
+        console.log("注册成功之后的自动登录数据", data);
+        pub._Init(that, pub.url, "loginOnCustomer", data, that.BackLoginIn);
+      } else {
+        console.log("注册失败");
+        this.fail_login = true;
+        this.fail_login_msg = res.stateMsg
+        // alert(res.stateMsg);
+        setTimeout(function () {
+          that.fail_login = false;
+        }, 2000)
+      }
+    },
+
+    /**
+     * 账号登录
+     */
+    LoginIn() {
+      console.log("账号密码登录");
+      var that = this;
+      var data = {
+        login_type: "login_account",
+        customer_tel: that.ph_num,
+        // customer_password: that.pass,
+        customer_password: hex_md5(that.pass)
+        // customer_last_login_ip: returnCitySN.cip
+      };
+      console.log("登录数据", data);
+      pub._Init(that, pub.url, "loginOnCustomer", data, that.BackLoginIn);
+    },
+
+    /**
+     * 登录回调
+     */
+    BackLoginIn(res) {
+      var that = this
+      console.log("登录回调函数", res);
+      if (res.stateCode == "200") {
+        // console.log('跳转首页')
+        localStorage.setItem("buyer_id", res.data.customer_id);
+        localStorage.setItem("tk", res.data.token);
+        window.location.href = "./index.html";
+      } else {
+        this.fail_login = true;
+        this.fail_login_msg = res.stateMsg
+         alert(res.stateMsg);
+        setTimeout(function () {
+          that.fail_login = false;
+        }, 2000)
+      }
+    },
+
+    /**
+     * 发送验证码
+     */
+    SendCode() {
+      var that = this;
+      var data = {
+        telePhoneNum: that.ph_num,
+        templateCode: "SMS_153330698"
+      };
+      console.log(data);
+      pub._Init(that, pub.url, "sendSms", data, that.BackCode);
+    },
+    /**
+     * 验证码回调
+     */
+    BackCode(res) {
+      var that = this
+      console.log("发送验证码的回调", res);
+      if (res.code == "200") {
+        this.msg_code = "已发送";
+      } else {
+        this.msg_code = "重新发送";
+        this.fail_login = true;
+        this.fail_login_msg = res.msg
+        // alert(res.stateMsg);
+        setTimeout(function () {
+          that.fail_login = false;
+        }, 2000)
+      }
+    },
+    /**
+     * 短信登录
+     */
+    MsgLogin() {
+      var that = this
+      console.log("短信登录");
+      var data = {
+        login_type: "login_verification",
+        customer_tel: that.ph_num,
+        verification_code: that.code,
+        // customer_last_login_ip: returnCitySN.cip
+      };
+      console.log(data)
+      pub._Init(that, pub.url, "loginOnCustomer", data, that.BackLoginIn);
+    },
+    Tab(parm) {
+      this.tab = parm;
+    },
+    /**
+     * 点击短信登录
+     */
+    Change() {
+      this.show_msg = !this.show_msg;
+      this.show_ph = !this.show_ph;
+      this.code = '';
+      this.msg_code = '获取验证码'
+    },
+    /**
+     * 手机号
+     */
+    _Phone(event) {
+      console.log("检验手机号", event.target.value);
+      var phone = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
+      if (!phone.test(this.ph_num)) {
+        this.ph_num = "";
+      }
+    }
+  }
+});

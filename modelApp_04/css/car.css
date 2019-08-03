@@ -1,0 +1,285 @@
+body{
+  background-color: #f5f5f5;
+
+}
+/* #app{
+  padding-top:0.51rem; 
+} */
+nav {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 0.2rem 0 0.2rem;
+  align-items: center;
+  font-size: 0.18rem;
+  background-color: #fff;
+  margin-bottom: 0.02rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+.back,
+.search_scan {
+  width: 0.36rem;
+  height: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+}
+.back_row {
+  width: 0.12rem;
+  height: 0.2rem;
+}
+.ipt_sea {
+  width: 75%;
+  font-size: 0.18rem;
+  border: 0.01rem solid #eee;
+  border-radius: 0.2rem;
+  height: 0.3rem;
+  padding-left: 0.1rem;
+}
+.head_search {
+  width: 0.26rem;
+  height: 0.26rem;
+}
+
+ .car_list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #fff;
+  padding: 0.1rem 0 0 0.15rem;
+  font-size: 0.12rem;
+  margin-bottom: 0.015rem;
+}
+
+.item_title {
+  display: flex;
+  justify-content: flex-start;
+  height: 0.40rem;
+  align-items: center;
+  color: #424242;
+  font-size: 0.120rem;
+}
+.itemimg{
+  width: 0.4rem;
+  height: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.items_img {
+  width: 0.2rem;
+  height: 0.2rem;
+  margin-left: 0.05rem;
+  margin-right: 0.10rem;
+}
+.item_img {
+  width: 0.15rem;
+  height: 0.15rem;
+  margin-right: 0.05rem;
+}
+ .item_info {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0rem 0 0.20rem 0;
+  align-items: center;
+}
+
+ .item_info_photo {
+  width: 0.6rem;
+  height: 0.6rem;
+}
+
+.item_info_img {
+  width: 100%;
+  height: 100%;
+}
+
+
+.item_info_text {
+  height: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.12rem;
+  width: 65%;
+  margin-left: 0.1rem;
+} 
+
+.info_span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+  white-space: nowrap;
+}
+
+.item_icon, .item_icon_text {
+  width: 0.2rem;
+  height:0.2rem;
+  margin-right: 0rem;
+  display: inline-block;
+}
+
+.item_icon_text {
+  text-align: center;
+  font-size: 0.12rem;
+  line-height: 0.35rem;
+  width: 0.3rem;
+  border: none;
+}
+
+.introduce{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 60%;
+} 
+.item_info_introduce{
+  padding-right: 0.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+
+.footer {
+  position: fixed;
+  bottom: 0.55rem;
+  left: 0;
+  height: 0.5rem;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  box-shadow: 0.10rem -0.01rem 0.05rem rgba(214, 214, 214, 0.5);
+  font-size: 0.12rem
+}
+
+  .foot_left {
+  padding-left: 0.15rem;
+  width: 20%;
+}
+
+.gobuy {
+  background-color: #e61e56;
+  height: 0.5rem;
+  width: 1rem;
+  text-align: center;
+  line-height: 0.5rem;
+  color: #fff;
+  font-size: 0.18rem;
+}
+.total_price {
+  color: #e61e56;
+}
+
+
+.place{
+  height: 1.1rem
+}
+
+/* 暂无商品去首页 */
+.index{
+  width: 100%;
+  height: 2rem;
+  line-height: 2rem;
+  color: #e61e56;
+  text-align: center;
+  font-size: 0.2rem;
+}
+
+/* 新增类名 */
+.cardel{
+  margin-left: 0.1rem !important;
+}
+
+.dis_need{
+  padding-right: 0.15rem
+}
+
+/* 优惠券的弹框 */
+.dis_pannel{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 50%;
+  background-color: white;
+  z-index: 999999;
+  /* overflow-y: auto */
+}
+.dis_use{
+  height: 0.1rem;
+  padding: 0.2rem;
+  font-size: 0.14rem;
+  justify-content: space-between;
+  border-bottom: 0.01rem solid #f4f4f4;
+  color: #666;
+}
+.dis_close{
+  width: 0.15rem;
+  height: 0.15rem;
+}
+.dis_list{
+  padding:0 0.1rem;
+}
+.dis_item{
+  height: 1rem;
+  font-size: 0.14rem;
+  background-image: url('../imges/dis-nouse.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin: 0.1rem 0.05rem;
+  color: #ca224f;
+}
+.dis_item_left{
+  width: 25%;
+}
+.dis_item_mid{
+  width: 50%;
+}
+.dis_item_right{
+  width: 25%
+}
+.dis_item_date{
+  width: 55%;
+  color: #424242;
+  font-size: 0.14rem;
+}
+.dis_item_money{
+  font-size: 0.3rem;
+}
+.go_user{
+  padding: 0.05rem 0.1rem;
+  border-radius: 0.18rem;
+  background-color: #ca224f;
+  color: white;
+  font-size: 0.12rem;
+}
+.go_userd_bg{
+  background-image: url('../imges/dis-used.png');
+}
+.go_userd{
+  padding: 0.05rem 0.1rem;
+  border-radius: 0.18rem;
+  border: 0.01rem solid #ca224f;
+  color: #ca224f;
+  font-size: 0.12rem;
+}
+.coupon_pannel_list{
+  height: 95%;
+  overflow-y: auto;
+  padding-bottom: 0.25rem;
+}
+/*暂无优惠券 */
+.no_dis_count{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: #e61e56;
+  padding-top: 0.5rem;
+  font-size: 0.16rem;
+}

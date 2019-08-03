@@ -1,0 +1,168 @@
+body{
+  background-color: #f5f5f5
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.2rem 0 0.2rem;
+  align-items: center;
+  font-size: 0.18rem;
+  background-color: #fff;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0
+}
+.back{
+  width: 0.36rem;
+  height: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+  /* margin-right: 0.25rem; */
+}
+.search_scan {
+  width: 0.36rem;
+  height: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+  /* margin-right: 0.25rem; */
+}
+.back_row {
+  width: 0.12rem;
+  height: 0.2rem;
+}
+.ipt_sea {
+  width: 75%;
+  font-size: 0.18rem;
+  border: 0.01rem solid #eee;
+  border-radius: 0.2rem;
+  height: 0.3rem;
+  padding-left: 0.1rem;
+}
+.head_search {
+  width: 0.26rem;
+  height: 0.26rem;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 0.45rem;
+  background-color: #fff;
+  font-size: 0.16rem;
+  position: fixed;
+  width: 100%;
+  top: 0.4rem;
+  left: 0;
+}
+
+.nav_name {
+  height: 0.250rem;
+  border-bottom: 0.01rem solid transparent;
+}
+
+.nav_name_act {
+  border-bottom: 0.01rem solid #e61e56;
+}
+
+/* 内容 */
+/* 新建地址 */
+.blackaddress{
+  margin: 1.2rem auto;
+  width:3rem;
+  height: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 0.12rem
+}
+.black_add_photo{
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.black_add_img{
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.add_address{
+  width:1rem;
+  height: 0.35rem;
+  border: solid 0.01rem #e61e56;
+  border-radius: 0.25rem;
+  font-size: 0.16rem;
+  text-align: center;
+  line-height: 0.35rem;
+  color: #e61e56
+}
+
+/* 地址列表 */
+.have{
+  margin-top: 0.5rem
+}
+.have_list{
+  display: flex;
+  flex-direction: column;
+}
+.addr_list{
+  width: 95%;
+  margin: 0.1rem auto 0 ;
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.1rem;
+  flex-direction: column;
+  border-radius: 0.05rem;
+   font-size: 0.16rem;
+   color: #424242;
+}
+.items_top{
+  display: flex;
+  justify-content: space-between;
+  height: 0.3rem;
+  /* background-color: pink; */
+  align-items: center;
+  font-size: 0.16rem;
+}
+.detail_addr{
+  padding: 0.05rem
+}
+
+.items_left,.items_right{
+  width: 30%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-right: 0.1rem
+
+}
+.items_left img ,.items_right img {
+  width: 0.2rem;
+  height: 0.2rem;
+  margin-right: 0.15rem
+}
+.items_right{
+  justify-content: flex-end
+}
+.new_addr{
+  width: 90%;
+  height: 0.5rem;
+  line-height: 0.5rem;
+  text-align: center;
+  color: #fff;
+  font-size: 0.2rem;
+  margin: 0.2rem auto;
+  background-color: #e61e56;
+  border-radius: 0.25rem;
+}
+.items_foot{
+  border-top: 0.01rem solid #f2f2f2;
+  margin-top: 0.1rem;
+  padding-top: 0.1rem
+}

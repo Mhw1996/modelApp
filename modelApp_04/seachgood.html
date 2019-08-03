@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <title>商品搜索</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/seachgood.css">
+  <style>
+    .nogood{
+      font-size: 0.16rem;
+      width: 100%;
+      height: 1rem;
+      text-align: center;
+      line-height: 1rem;
+      color: red
+    }
+
+   
+        [v-cloak]{
+          display: none !important
+        }
+    .more{
+      width: 100%;
+      height: 1rem;
+      font-size: 0.12rem;
+      line-height: 1rem;
+      text-align: center;
+      color: #d8d3d3
+    }
+  </style>
+</head>
+<script src="./js/pub.js"></script>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+
+<body>
+  <div id="app">
+    <nav>
+      <div @click='back' class="back">
+        <img class='back_row' src='./imges/back1.png'>
+      </div>
+      <input v-model='ipt'    v-on:keyup.enter="inputFunc" class='ipt_sea' placeholder='输入商品 ' />
+      <div @click='inputFunc' class="search_scan">
+        <img class='head_search' src='./imges/search.png'>
+      </div>
+    </nav>
+    <!-- 顶部分类 -->
+    <div  class='classify'>
+        <div @click= 'all'  class="nav_name all"  v-bind:class="allshow ? 'textred' : '' " >
+            综合
+          </div>
+          <div @click='price' class="price" v-bind:class=" priceshow ? 'textred' :'' " >
+            <div>
+              价格
+            </div>
+            <div class='up_down'>
+              <img v-if="price_id" class="price_img" src='./imges/up1.png'>
+              <img v-else class="price_img" src='./imges/down1.png'>
+            </div>
+          </div>
+
+          <div @click='date' class="nav_name date" v-bind:class="dateshow ? 'textred' :''">
+            <div>
+              日期
+            </div>
+            <div class='up_down'>
+              <img v-if="data_time" class="price_img" src='./imges/up1.png'>
+              <img v-else class="price_img" src='./imges/down1.png'>
+            </div>
+          </div>
+      <!-- <div @click= 'all'  class="nav_name all"  v-bind:class="allshow?text_red:''" >
+        综合
+      </div>
+      <div @click='price' class="price" v-bind:class="{ priceshow: text_red }" >
+        <div>
+          价格
+        </div>
+        <div class='up_down'>
+          <img v-if="price_id" class="price_img" src='./imges/up1.png'>
+          <img v-else class="price_img" src='./imges/down1.png'>
+        </div>
+      </div>
+      <div @click='date' class="nav_name date" v-bind:class="{ dateshow: text_red }">
+        日期
+      </div> -->
+    </div>
+
+    <div v-cloak v-if='show' class='top_list'>
+      <div v-for="item in list" :key="item.id" class='top_item'>
+        <div class='top_img'>
+          <img :src='item.goods_mini_img_url'>
+        </div>
+        <div @click='Init(item.goods_id,item.dept_id)' class='top_info'>
+          <span class='top_info_text'>{{item.goods_name}}</span>
+          <span class='buy'>{{item.goods_unit_value}}{{item.goods_unit}}</span>
+          <span class='buy'>￥{{item.sale_price}}</span>
+        </div>
+      </div>
+      <div class="more"  @click='GoMore()' >加载更多</div>
+    </div>
+    <div v-cloak v-else @click='GoIndex()' class="nogood" >
+      暂无商品,去首页
+    </div>
+</div>
+
+</body>
+<script src="./js/seachgood.js"></script>
+
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue练习</title>
+  <script src="./js/pub.js"></script>
+  <script src="./js/jquery-1.12.4.js"></script>
+  <script src="./js/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <button @click='change' >xiugai</button>
+    <h3>{{msg}}</h3>
+    <!-- <h3>{{reversedMessage}}</h3> -->
+  </div>
+</body>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      msg: "原始数据"
+    },
+    created() {
+      
+    },
+    computed: {
+      reversedMessage: function () {
+        // `this` 指向 app 实例
+        return this.message='计算属性的数据'
+      }
+    },
+    methods: {
+      change(){
+        this.$set(this.msg = "kajdhf")
+      }
+    }
+  })
+</script>
+
+</html>

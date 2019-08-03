@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <title>我的</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/mine.css">
+  <style>
+      [v-cloak]{
+        display: none !important
+      }
+  </style>
+</head>
+<script src="./js/pub.js"></script>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+
+<body>
+  <div id="app">
+    <div v-cloak class='my_contailer'>
+      
+      <div class='nav'>
+        <div  class='nav_top'>
+          <div v-if='show' class='nav_top_left'>
+            <img class='mine_pic' v-if='person.customer_avater_url' :src='person.customer_avater_url'>
+            <img v-else  class='mine_pic'  src="./imges/my_head.png" alt="">            
+            <span v-if='person.customer_nickname' >{{person.customer_nickname}}</span>
+            <span v-else @click='UserLogin'>用户登录/注册</span>
+          </div>
+          <div v-else @click='UserLogin' class='nav_top_left'>
+            <img class='mine_pic' src='./imges/my_head.png'>
+            <span >用户登录/注册</span>
+          </div>
+          <div @click='GoMy(person.customer_id)' class='nav_top_right'>
+            <image class='mine_pic_set' src='./imges/set.png'>
+              <span>设置</span>
+          </div>
+        </div>
+        <div class='row_flex ar_flex ar_flex' >
+          <span @click='GoAddress' >我的地址</span>
+          <span @click='GoCouponBag' >我的卡包</span>
+        </div>
+      </div>
+      <div @click='SkanOrder(1)' class='order_title'>
+        <div class='order_title_text'>我的订单</div>
+        <div class='order_title_skan'> 
+          查看
+          <img class='row' src='./imges/right1.png'>
+        </div>
+      </div>
+      <div class='order_list'>
+        <div @click='SkanOrder(5)' class='order_items'>
+          <img class='order_icon' src='./imges/done.png'>
+          <span class='order_text'>全部</span>
+        </div>
+        <div @click='SkanOrder(1)' class='order_items'>
+          <img class='order_icon' src='./imges/in_padment.png'>
+          <span class='order_text'>待付款</span>
+        </div>
+        <div @click='SkanOrder(3)' class='order_items'>
+          <img class='order_icon' src='./imges/in_recieve.png'>
+          <span class='order_text'>待收货</span>
+        </div>
+        <div @click='SkanOrder(4)' class='order_items'>
+          <img class='order_icon' src='./imges/in_valuate.png'>
+          <span class='order_text'>待评价</span>
+        </div>
+        
+        <div class='order_items'>
+          <img class='order_icon' src='./imges/return_goods.png'>
+          <span class='order_text'>退货退款</span>
+        </div>
+      </div>
+      <div  >
+        <div class='mine_item row_flex be_flex al_flex' @click='GoExpress(person.customer_id)' >我的评价
+          <img class='row' src='./imges/shop_skan.png'>
+        </div>
+        
+      </div>
+      <!-- <div>
+        <div class='mine_item row_flex be_flex al_flex' @click='GoAddress' >我的地址
+          <img class='row' src='./imges/shop_skan.png'>
+        </div>
+      </div> -->
+      <div>
+        <div class='mine_item row_flex be_flex al_flex' @click='Gorevervation()' >我的预约
+          <img class='row' src='./imges/shop_skan.png'>
+        </div>        
+      </div>
+      <!-- <div>
+        <div class='mine_item row_flex be_flex al_flex' @click='Gorevervationshop()' >店铺预约
+          <img class='row' src='./imges/shop_skan.png'>
+        </div>
+      </div> -->
+      <!-- <div>
+          <div class='mine_item row_flex be_flex al_flex' @click='Gorevervationshop()' >我的卡卷
+            <img class='row' src='./imges/shop_skan.png'>
+          </div>
+        </div> -->
+    </div>
+  </div>
+
+  <!-- <div id="app">
+    <div v-cloak class='my_contailer'>
+      <div class='nav'>
+        <div  class='nav_top'>
+          <div v-if='show' class='nav_top_left'>
+            <img class='mine_pic' v-if='person.customer_avater_url' :src='person.customer_avater_url'>
+            <img v-else  class='mine_pic'  src="./imges/my_head.png" alt="">            
+            <span v-if='person.customer_name' >{{person.customer_nickname}}</span>
+            <span v-else @click='UserLogin'>用户登录/注册</span>
+          </div>
+          <div v-else @click='UserLogin' class='nav_top_left'>
+            <img class='mine_pic' src='./imges/my_head.png'>
+            <span >用户登录/注册</span>
+          </div>
+          <div @click='GoMy(person.customer_id)' class='nav_top_right'>
+            <image class='mine_pic_set' src='./imges/set.png'>
+              <span>设置</span>
+          </div>
+        </div>
+      </div>
+      <div @click='SkanOrder(1)' class='order_title'>
+        <div class='order_title_text'>我的订单</div>
+        <div class='order_title_skan'> 
+          查看全部
+          <img class='row' src='./imges/right1.png'>
+        </div>
+      </div>
+      <div class='order_list'>
+        <div @click='SkanOrder(5)' class='order_items'>
+          <img class='order_icon' src='./imges/done.png'>
+          <span class='order_text'>全部</span>
+        </div>
+        <div @click='SkanOrder(1)' class='order_items'>
+          <img class='order_icon' src='./imges/in_padment.png'>
+          <span class='order_text'>待付款</span>
+        </div>
+        <div @click='SkanOrder(3)' class='order_items'>
+          <img class='order_icon' src='./imges/in_recieve.png'>
+          <span class='order_text'>待收货</span>
+        </div>
+        <div @click='SkanOrder(4)' class='order_items'>
+          <img class='order_icon' src='./imges/in_valuate.png'>
+          <span class='order_text'>待评价</span>
+        </div>
+        
+        <div class='order_items'>
+          <img class='order_icon' src='./imges/return_goods.png'>
+          <span class='order_text'>退货退款</span>
+        </div>
+      </div>
+      <div  >
+        <div class='mine_item row_flex be_flex al_flex' @click='GoExpress(person.customer_id)' >我的评价
+          <img class='row' src='./imges/shop_skan.png'>
+        </div>
+        
+      </div>
+      <div>
+        <div class='mine_item row_flex be_flex al_flex' @click='GoAddress' >我的地址
+          <img class='row' src='./imges/shop_skan.png'>
+        </div>
+      </div>
+      <div>
+        <div class='mine_item row_flex be_flex al_flex' @click='Gorevervation()' >我的预约
+          <img class='row' src='./imges/shop_skan.png'>
+        </div>        
+      </div>
+      <div>
+        <div class='mine_item row_flex be_flex al_flex' @click='Gorevervationshop()' >店铺预约
+          <img class='row' src='./imges/shop_skan.png'>
+        </div>
+      </div>
+      <div>
+          <div class='mine_item row_flex be_flex al_flex' @click='Gorevervationshop()' >我的卡卷
+            <img class='row' src='./imges/shop_skan.png'>
+          </div>
+        </div>
+    </div>
+  </div> -->
+
+  <footer>
+    <a class="foot_div foot_div_one">
+      <img class="footer_img" src="./imges/home0.png" alt="">
+      <span class="foot_span">首页</span>
+    </a>
+    <!-- <a class="foot_div foot_div_two" target="blank">
+      <img class="footer_img" src="./imges/classify0.png" alt="">
+      <span class="foot_span">分类</span>
+    </a> -->
+    <a class="foot_div foot_div_three" target="blank">
+      <img class="footer_img" src="./imges/shop_cart0.png" alt="">
+      <span class="foot_span">购物车</span>
+    </a>
+    <a class="foot_div foot_div_four" target="blank">
+      <img class="footer_img" src="./imges/my1.png" alt="">
+      <span class="foot_span footer_red_color">我的</span>
+    </a>
+  </footer>
+
+  <script src="./js/footer.js"></script>
+  <script src="./js/mine.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+	/>
+	<title>Document</title>
+	<!-- <link rel="stylesheet" href="css/element.css"> -->
+	<script src="js/vue.min.js"></script>
+	<!-- <script src="js/element.js"></script> -->
+	<script src="js/jquery-1.12.4.js"></script>
+	<script src="js/rem.js"></script>
+	<script src="./js/pub_flow.js"></script>
+	<link rel="stylesheet" href="./css/index_flow.css">
+	<script src="./js/footer.js"></script>
+</head>
+
+<body>
+<div id="app" v-cloak>
+<div class="box">
+  <header class="my_header">
+    <img src="imges/flow_logo.png" alt="" class="img_logo">
+    <span class="logo_txt">蚂蚁商城</span>
+    <!-- <img src="imges/顶部导航购物车.png" alt="" class="img_cart"> -->
+    <span style="width: 0.6rem;height: 0.15rem;"></span>
+  </header>
+  <br>
+  <br>
+  <br>
+<div id="grid" v-for="item of myTypeList">
+  <!-- {{item.column_name}}   -->
+  <div class="myContent">
+
+    <div class="left">
+      <div class="grid-item" v-for="itemgoods of item.good_list" @click="jumpShopInfo(itemgoods.product_id,itemgoods.shop_id)">
+        <div class="img_height">
+          <img :src="itemgoods.product_img" alt="" class="img_list"  onerror="this.src='./imges/160.png'">
+        </div>
+        <!-- <img src="./imges/160.png" alt="" class="img_list" onerror="this.src='./imges/160.png'"> -->
+        <p class="list_text">{{itemgoods.product_name}}</p>
+        <p class="list_price">
+          <span style="font-size: 0.1rem">￥</span>
+          <span style="font-size: 0.17rem;margin-left:-0.06rem">{{itemgoods.sale_price}}</span>
+          <!-- <span style="font-size: 0.12rem;color: #616161">已售3342</span> -->
+          <!-- <img src="imges/加入购物车.jpg" alt="加入购物车" class="add_cart_img" :data-productId="itemgoods.product_id" @click="AddShopCart"> -->
+        </p>
+      </div>
+    </div>
+    <div class="right">
+      <div class="grid-item" v-for="itemgoods of item.pro_list" @click="jumpShopInfo(itemgoods.product_id,itemgoods.shop_id)">
+        <div class="img_height"> 
+          <img :src="itemgoods.product_img" alt="" class="img_list" onerror="this.src='./imges/160.png'">
+        </div> 
+        <p class="list_text">{{itemgoods.product_name}}</p>
+        <p class="list_price">
+          <span style="font-size: 0.1rem">￥</span>
+          <span style="font-size: 0.17rem;margin-left:-0.06rem">{{itemgoods.sale_price}}</span>
+          <!-- <span style="font-size: 0.12rem;color: #616161">已售3342</span> -->
+          <!-- <img src="imges/加入购物车.jpg" alt="加入购物车" class="add_cart_img" :data-productId="itemgoods.product_id" @click="AddShopCart"> -->
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+  <br>
+  <br>
+  <br>
+  <footer class="myFooter">
+    <a class="foot_div foot_div_one">
+      <img class="footer_img" src="./imges/home1.png" alt="" />
+      <span class="foot_span footer_red_color">首页</span>
+    </a>
+    <!-- <a class="foot_div foot_div_two" target="blank">
+      <img class="footer_img" src="./imges/classify0.png" alt="" />
+      <span class="foot_span">分类</span>
+    </a> -->
+    <a class="foot_div foot_div_three" target="blank">
+      <img class="footer_img" src="./imges/shop_cart0.png" alt="" />
+      <span class="foot_span">购物车</span>
+    </a>
+    <a class="foot_div foot_div_four" target="blank">
+      <img class="footer_img" src="./imges/my0.png" alt="" />
+      <span class="foot_span">我的</span>
+    </a>
+  </footer>
+</div>
+</div>
+<script>
+  new Vue({
+    el: "#app",
+    data() {
+      return {
+        mySwiper: [],//商品的轮播图
+        myTypeList: [],//具体的栏目
+        goods_id: '', //商品的id
+        buyer_id: '',//用户的id
+        goods_count: 1,//商品的数量
+      }
+    },
+    methods: {
+      getIndexInfo() {
+        const that = this
+        var indexParam = {
+          that: that,
+          _url: pub._url,
+          ur: pub._DetailApi.api_indexPro,
+          data: {},
+          cbk: that.getIndexInfocbk
+        }
+        // console.log(indexParam)
+        pub._InitAjax(indexParam);
+      },
+      getIndexInfocbk(res) {
+        const that = this
+        // console.log(res)
+        that.mySwiper = res.data.BANNER.column_list //商品的轮播图
+        that.myTypeList = res.data.PRODUCT.column_list //具体的栏目
+        // console.log(this.myTypeList.length)
+        if (res.code == '200') {
+          for (var i = 0; i < res.data.PRODUCT.column_list.length; i++) {
+            var mid_arr = [];
+            var back_arr = [];
+            var goodList = res.data.PRODUCT.column_list[i].product_list
+            // console.log(goodList)
+            var len = goodList.length
+            // console.log(len)
+            if (len > 0) {
+              // var mid = Math.ceil(goodList.length / 2 )
+              // var mid_arr = goodList.slice(0,mid)
+              // var back_arr =  goodList.slice(mid,len)
+              // console.log(mid,len,mid_arr,back_arr)
+              for (var n = 0; n < goodList.length; n++) {
+                // console.log(n%2==0)
+                if (n % 2 == 0) {
+                  mid_arr.push(goodList[n])
+                } else {
+                  back_arr.push(goodList[n])
+                }
+              }
+              that.$set(res.data.PRODUCT.column_list[i], 'good_list', mid_arr)
+              that.$set(res.data.PRODUCT.column_list[i], 'pro_list', back_arr)
+            }
+            // console.log(mid_arr, back_arr)	
+          }
+          
+        } else {
+          alert('加载数据失败，请检查网络！')
+        }
+      },
+      AddShopCart(e) {
+        localStorage.setItem('buyer_id', '657201906051706788') //用户的id
+        const that = this
+        const buyer_id = localStorage.getItem('buyer_id')
+        that.goods_id = e.target.dataset.productid //商品的id
+        console.log(that.goods_count, '商品的数量')
+        console.log(buyer_id, "用户的id")
+        console.log(that.goods_id, "商品的id")
+        var addcartParam = {
+          that: that,
+          _url: pub._url,
+          ur: pub._DetailApi.api_addCart,
+          data: {
+            buyer_id: buyer_id,
+            goods_count: that.goods_count,
+            goods_id: that.goods_id
+          },
+          cbk: that.addcartcbk
+        }
+        // console.log(addcartParam) 
+        pub._InitAjax(addcartParam);
+      },
+      addcartcbk(res) {
+        console.log(res)
+      },
+      jumpShopInfo(id,shopid){
+        console.log(id , shopid)
+        // const that=this;
+        // that.goods_id = e.target.dataset.productid
+        // that.shopId = e.target.dataset.shopid
+        // console.log(that.goods_id,that.shopId)
+        localStorage.setItem('shop_id',shopid)
+        window.location.href = "./GoodDetail.html?id=" + id + "&shop=" + shopid;
+      }
+    },
+    created() {
+      this.getIndexInfo()
+    }
+  })
+</script>
+
+</body>
+
+</html>

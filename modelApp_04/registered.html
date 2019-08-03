@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="Shortcut Icon" href="./favicon.ico" />
+    <title>注册</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no"
+    />
+    <script src="./js/pub.js"></script>
+    <link rel="stylesheet" href="./layui/css/layui.mobile.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <style>
+      body {
+        font-size: 0.16rem;
+      }
+      .photo {
+        width: 100%;
+        height: 1.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 0.35rem;
+      }
+      .picture {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+      }
+
+      input {
+        width: 80%;
+        height: 0.45rem;
+        margin: 0.1rem 0;
+        border: 0.01rem solid #cea3a3;
+        outline: none;
+        padding: 0.05rem 0.1rem;
+        border-radius: 0.25rem;
+      }
+      .middle {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        margin-bottom: 0.1rem;
+      }
+      .login_in {
+        width: 80%;
+        height: 0.5rem;
+        line-height: 0.5rem;
+        text-align: center;
+        border: 0.01rem solid #cea3a3;
+        margin-bottom: 0.1rem;
+        border-radius: 0.25rem;
+        color: #cea3a3;
+      }
+      .go_register {
+        color: #8c7272;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 0.2rem 0 0.2rem;
+        align-items: center;
+        font-size: 0.18rem;
+        background-color: #fff;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0
+      }
+      .back{
+        height: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        flex-direction: column;
+        /* margin-right: 0.25rem; */
+      }
+      .back_row {
+        width: 0.12rem;
+        height: 0.2rem;
+      }
+    </style>
+  </head>
+
+  <script src="./js/jquery-1.12.4.js"></script>
+  <script src="./js/vue.js"></script>
+  <script src="./js/rem.js"></script>
+
+  <body>
+    <div id="app"> 
+      <nav @click="back">
+        <div  class="back"> 
+          <img class="back_row" src="./imges/back1.png" />
+        </div>
+        <div>注册</div>
+        <div  class="search_scan"></div>
+      </nav>
+      <div class="photo">
+        <img class="picture" src="./favicon.ico" alt="" />
+      </div>
+      <div class="middle">
+        <input type="text" v-model="name" placeholder="输入昵称" />
+        <input type="text" v-model="account" placeholder="输入注册手机账号" />
+        <input
+          type="password"
+          v-model="pass"
+          placeholder="输入注册密码,至少6位"
+        />
+      </div>
+      <div class="middle">
+        <div @click="LoginIn" class="login_in">成为用户</div>
+      </div>
+    </div>
+
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script src="./js/jquery-1.12.4.js"></script>
+    <script src="./js/registered.js"></script>
+  </body>
+</html>

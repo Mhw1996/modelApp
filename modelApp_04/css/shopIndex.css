@@ -1,0 +1,344 @@
+header{
+	width: 100%;
+	height: 2rem;
+	/* position: fixed; */
+	z-index: 999;
+}
+.bgimg{
+	width: 100%;
+	height: 2rem;
+	position: absolute;
+}
+.mymaskposition{
+	position: relative;
+	width: 100%;
+	height: 2rem;
+	background: rgba(0, 0, 0,0.7);
+	z-index: 2;
+}
+.back{
+	width: 0.10rem ;
+	height: 0.22rem;
+	vertical-align: middle;
+	margin-left: 0.1rem;
+	padding-top: 0.06rem
+}
+.station{
+	width: 0.15rem ;
+	height: 0.33rem;
+}
+.search{
+	background: rgba(255, 255, 255, 0.4) url(../imges/search.png) no-repeat;
+	background-size: 0.2rem 0.2rem;
+	background-position: 0.1rem;
+	border-radius: 1rem;
+	width: 2.49rem;
+	height: 0.33rem;
+	border: 0;
+	/* -o-padding-left: 0.38rem ;
+	-moz-padding-left: 0.38rem ;
+	-webkit-padding-left: 0.38rem   */
+}
+.myheader{
+	width: 100%;
+	padding-top: 0.1rem;
+	clear: both;
+	display: flex;
+	justify-content: space-around;
+}
+input::-webkit-input-placeholder { 
+	color: rgb(255, 255, 255);
+	padding-left: 0.4rem;
+	font-size: 0.16rem;
+	font-family: PingFang-SC-Medium;
+}
+input:-o-placeholder { 
+	color: rgb(255, 255, 255);
+	padding-left: 0.4rem;
+	font-size: 0.16rem
+}
+input::-moz-placeholder { 
+	color: rgb(255, 255, 255);
+	padding-left: 0.4rem;
+	font-size: 0.16rem
+}	
+input::-ms-input-placeholder {
+	color: rgb(255, 255, 255);
+	padding-left: 0.4rem;
+	font-size: 0.16rem
+}
+.imglogobox{
+	margin-top: 0.3rem;
+	margin-left: 0.125rem;
+}
+.shoplogo{
+ width: 0.5rem;
+ height: 0.5rem;
+ vertical-align: middle;
+ margin-right: 0.17rem;
+ border-radius: 0.03rem;
+}
+.imglogobox span{
+	font-size:0.2rem;
+	color: #fff;
+	font-family: PingFang-SC-Medium;
+}
+.myTabs{
+ margin-top: 0.2rem;
+}
+.myTabsChange{
+	position: fixed;
+	/* background: #8c8c8c; */
+	background: rgb(117, 118, 120);
+	top: 0px;
+	margin-top: 0px !important;
+	width: 100%;
+	height: 0.46rem !important;
+ 
+}
+.libox{
+	display: flex;
+	justify-content: start;
+	flex-wrap:nowrap;
+	overflow-x: auto;
+ 
+}
+.myTabs ul li{
+	color: rgb(255, 255, 255);
+	font-size: 0.16rem;
+	flex-shrink: 0;
+	padding: 0.1rem;
+	/* border: 1px solid saddlebrown */
+	width: 0.55rem;
+	text-align: center
+}
+/* .myTabs ul li span{
+	padding-bottom: 0.04rem;
+	border-bottom: 0.02rem solid #fff
+} */
+ .TabMarks{
+	padding-bottom: 0.04rem;
+	border-bottom: 0.02rem solid #fff
+ }
+.myimgbanner{
+	width: 100%;
+	height: 2.25rem;
+}
+.mytypes{
+	/* background: #eaeaea; */
+	background: #fff;
+	margin-top: 0.04rem;
+	width: 100%;
+	text-align: center;
+}
+.hf{
+	width: 100%;
+	margin-top:-0.05rem
+}
+.hf img{
+	width: 100%;
+	height: 0.55rem;
+}
+.kispa{
+	background: #fff;
+	margin: 0 0.08rem 0  0.08rem;
+}
+.kispa ul{
+	display: flex;
+	justify-content: space-around;
+	flex-wrap:wrap;
+}
+ .kispa ul li img{
+	 width: 0.8rem; 
+	 height: 0.8rem;
+	 vertical-align: middle;
+	 line-height: 1rem;
+ }
+ .mylidis{
+	width: 49.85%;
+	height: 1rem;
+	display: flex;
+	align-items: center;
+}
+ .mylidis:nth-child(2n-1){
+		border-right: 0.01rem solid #eaeaea ;
+}
+	.mylidis:nth-child(n){
+	border-bottom: 0.01rem solid #eaeaea ;
+}
+.fonttext{
+	width:0.73rem;
+	padding:0 0.1rem 
+
+}
+.fonttext span{
+	font-size: 0.16rem;
+	font-family: PingFang-SC-Medium;
+	color: #000;
+}
+.eng{
+	color: #000;
+	font-size: 0.07rem !important;	
+}
+.hotSale{
+	margin-top: 0.12rem;
+	/* border: 1px solid royalblue; */
+	background: #fff;
+}
+.iline-left , .iline-right , .hotSale i>span{
+	font-size: 0.2rem;
+	padding-right: 0.1rem;
+	font-family: PingFang-SC-Medium;
+	color: #212121;	
+	font-weight: 800;
+ 
+}
+.iline-right{
+	padding-left:0.1rem;
+}
+/* 九张图片 */
+.nenge{
+	margin: 0.1rem;
+}
+.nenge ul {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap:wrap;
+}
+.nenge ul li{
+	width: 1.13rem;
+	height: 1.13rem;
+	background: #eaeaea;
+	margin-bottom: 0.05rem;
+}
+
+.imgnine{
+	width: 100%;
+	height: 100%;
+}
+/* 横幅 */
+.piiic{
+	width: 100%;
+}
+.piiic img{
+	width: 100%;
+	display: block;
+}
+/* 店长推荐 */
+.Shopowner{
+	margin-top: 0.08rem;
+	background: #f7f7f8
+}
+/* 回滚到顶部 */
+.TopArrow{
+	position: fixed;
+	bottom: 10px;
+	right: 12px;
+	display: none;
+}
+.TopArrowchange{
+	position: fixed;
+	bottom: 10px;
+	right: 12px;
+	display: block !important;
+}
+.imgTop{
+	width: 0.32rem;
+	height: 0.321rem;
+}
+
+
+/* 横幅下面加4张图片 */
+.typeFour{
+	margin: 0px 0.1rem 0px 0.1rem;
+}
+.img_url{
+	display: flex;
+	justify-content: space-between;
+	/* justify-content: start; */
+	flex-wrap: wrap
+}
+.img_url li:nth-child(2n-1){
+	border-right: 0.01rem solid #ffffff ;
+}
+.img_url li:nth-child(n){
+	border-bottom: 0.05rem solid #ffffff ;
+}
+.img_url li{
+	width:49.3%;
+	height: auto;
+}
+.img_url li img{
+	width: 100%;
+	height: 100%;
+	font-size: 0;
+	display: block
+}
+
+/* <!--商品列表文字加图片，店长推荐 横幅 --> */
+.onlyshoplist{
+	text-align: center;
+}
+/* 上新的商品 */
+.shopBox{
+	background: #f7f7f8;
+}
+.shopBox p{
+	color: #999999;
+	font-size: 0.14rem;
+	padding:0.1rem 0.1rem 0rem 0.1rem;
+}
+.shopBox div .myclockBox{
+	text-align: center;
+	font-size: 0.14rem;
+	height: 0.31rem;
+	line-height: 0.31rem;
+}
+/* 显示或隐藏加载跟多的商品 */
+.myBtn{
+	display: none;
+}
+.isColor{
+  color: #ff0000;
+}
+/* 搜索栏目中的样式测试 */
+.searchcontent{
+	width: 100%;
+	height: 0.41rem !important;
+	background: rgb(255, 255, 255);	
+ 
+}
+.searchcontentChange{
+	background: rgb(255, 255, 255) !important;
+	position: fixed;
+	width: 100%;
+	top: 0.46rem;
+	height: 0.41rem;
+	z-index: 777;
+}
+/* clock 闹钟 */
+.clock{
+	width: 0.12rem;
+	height: 0.12rem;
+	vertical-align: middle
+}
+/* 闹钟旁边的线 */
+.clockLine{
+	width: 35%;
+	border-bottom: 0.01rem solid rgb(199, 199, 199);;
+	display: inline-block;
+	vertical-align: middle;
+}
+/* 闹钟旁边的点 */
+.clockspot , .myclockspot{
+	width: 0.03rem;
+	height: 0.03rem;
+	background: rgb(199, 199, 199);
+	border-radius: 100%;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: -0.06rem
+}
+.myclockspot{
+	margin: 0 -0.06rem 0 0 
+}

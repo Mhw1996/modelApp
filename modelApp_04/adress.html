@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>地址页面</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <link rel="stylesheet" href="./layui/css/layui.mobile.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/address.css">
+  <style>
+      [v-cloak]{
+        display: none !important
+      }
+      .more{
+        width: 100%;
+        height: 1rem;
+        font-size: 0.12rem;
+        line-height: 1rem;
+        text-align: center;
+        color: #d8d3d3
+      }
+  </style>
+</head>
+
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+
+<body>
+
+  <div id="app">
+    <!-- 头部 -->
+    <nav>
+      <div @click='back' class="back">
+        <img class='back_row' src='./imges/back1.png'>
+      </div>
+      <div>我的收货地址</div>
+      <div @click='GoAddress' class="search_scan"> 添加 </div>
+    </nav>
+    <!-- 内容部分 -->
+    <div>
+
+      <!-- 有地址 -->
+      <div v-cloak v-if='list.length' class="have">
+        <!-- 外层判断 -->
+        <div class="have_list">
+          <!-- 列表 -->
+          <div  v-for='(item,index) in list' :key='item.receive_id' class="addr_list">
+            <div @click='SaveAddrItem(item.receive_id)' class="items_top">
+              <div>{{item.receive_name}}</div>
+              <div>{{item.receive_tel}}</div>
+            </div>
+            <div @click='SaveAddrItem(item.receive_id)' class="detail_addr">
+              {{item.country_name}}{{item.province_name}}{{item.city_name}}{{item.area_name}}{{item.receive_address}}
+            </div>
+            <div class="items_top items_foot">
+              <div @click='DefaultAddr(item.receive_id)' class="items_left">
+                <img v-if="item.default_status_id === 'default'" src="./imges/carselected.png" alt="">
+                <img v-else src="./imges/carselect.png" alt="">
+                <span>默认</span>
+              </div>
+              <div @click='EditAddr(item.receive_id)' class="items_right">
+                <img src="./imges/editaddr.png" alt="">
+                <span>编辑</span>
+              </div>
+              <div @click='DelAddr(item.receive_id)' class="items_right">
+                <img src="./imges/cardel.png" alt="">
+                <span>删除</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 清新建地址 -->
+          <div @click='GoAddress' class="new_addr">
+            添加新地址
+          </div>
+          <div class="more" v-if='more'  @click='GoMore()' >加载更多</div>
+        </div>
+      </div>
+      
+      <!-- 地址为空 新建地址 -->
+      <div v-cloak v-else @click='GoAddress'>
+        <div class="blackaddress">
+          <div class="black_add_photo">
+            <img class="black_add_img" src="./imges/blackaddress.png" alt="">
+          </div>
+          <div>你还没有收货地址，添加一个吧</div>
+          <div class="add_address()">新建地址</div>
+        </div>
+      </div>
+      
+    </div>
+
+
+    <!-- <div @click='EditAddr(7)' class="items_right">
+      <img src="./imges/editaddr.png" alt="">
+      <span>编辑</span>
+    </div> -->
+
+
+  </div>
+
+
+
+
+
+  <script src="./js/pub.js"></script>
+  <script src="./js/address.js"></script>
+</body>
+
+</html>

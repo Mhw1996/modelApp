@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <title>订单详情</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/orderdetail.css" />
+  <style>
+    [v-cloak] {
+      display: none !important;
+    }
+
+    .pay_pannel {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: pink;
+      top: 0;
+      left: 0;
+      font-size: 0.16rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .pannel_body {
+      height: 2rem;
+      background-color: skyblue;
+      position: fixed;
+      width: 100%;
+    }
+
+    .pannel_close {
+      width: 0.3rem;
+      height: 0.3rem;
+      position: absolute;
+      left: 0rem;
+      top: 0rem;
+    }
+  </style>
+</head>
+<script src="./js/pub.js"></script>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+
+<body>
+  <div id="app">
+    <!-- 顶部导航 -->
+    <nav>
+      <div @click="back" class="back">
+        <img class="back_row" src="./imges/back1.png" />
+      </div>
+      <div>订单详情</div>
+      <div class="search_scan"></div>
+    </nav>
+    <!-- 订单详情信息 -->
+    <!-- 待付款 -->
+    <div v-cloak v-if="current == 1">
+      <div class="order_staus">
+        <div class="order_top">
+          <img class="order_icon" src="./imges/order_icon.png" />
+          <span>{{ orderdetail.order_status_name }}</span>
+        </div>
+        <div class="order_mid">
+          <span>
+            您的订单已经提交，请在2小时内完成支付，超时订单自动取消 <br />
+            下单时间：{{ orderdetail.pay_time }}
+          </span>
+        </div>
+      </div>
+      <div @click="chooseAddress" v-if="addr_change" class="select_addr">
+        <div class="order_address">
+          <div class="order_top">
+            <img class="order_icon" src="./imges/address.png" />
+            <span class="info">{{ edit_address.receive_name }}：</span>
+            <span>{{ edit_address.receive_tel }}</span>
+          </div>
+          <div class="order_mid">
+            <span>
+              {{ edit_address.province_name }}{{ edit_address.city_name
+                }}{{ edit_address.area_name }}{{ edit_address.receive_address }}
+            </span>
+          </div>
+        </div>
+        <div @click="chooseAddress" class="addr_row">
+          <img class="addr_icon" src="./imges/right1.png" />
+        </div>
+      </div>
+      <div v-else class="select_addr" @click="chooseAddress">
+        <div class="order_address">
+          <div class="order_top">
+            <img class="order_icon" src="./imges/address.png" />
+            <span class="info">{{ orderdetail.receiver_name }}：</span>
+            <span>{{ orderdetail.receiver_tel }}</span>
+          </div>
+          <div class="order_mid">
+            {{ orderdetail.receiver_address }}
+            <!-- <span>{{receiveAddress.province_name}}{{receiveAddress.city_name}}{{receiveAddress.area_name}}{{receiveAddress.receive_address}}</span> -->
+          </div>
+        </div>
+        <div @click="chooseAddress" class="addr_row">
+          <img class="addr_icon" src="./imges/right1.png" />
+        </div>
+      </div>
+      <div class="order_info">
+        <div class="shop_top">
+          <div class="shop_top">
+            <img class="address_icon" src="./imges/shop_name.png" />
+            <span class="info">{{ orderdetail.dept_name }}</span>
+          </div>
+          <div class="addr_row">
+            <!-- <img class='addr_icon' src='./imges/right1.png'> -->
+          </div>
+        </div>
+
+        <div v-for="(item,id) in orderdetail.orderGoods" :key="item.id">
+          <div class="order_middle">
+            <div class="order_list">
+              <div class="order_list_left">
+                <img class="order_list_left_img" :src="item.goods_mini_img_url" />
+              </div>
+              <div class="order_list_mid">
+                <span class="order_list_mid_text">{{ item.goods_name }}</span>
+                <span class="order_list_mid_text">{{ item.goods_unit_value }}{{ item.goods_unit }}</span>
+              </div>
+              <div class="order_list_right">
+                <span class="text">￥{{ item.transaction_price }}</span>
+                <span class="text">x{{ item.goods_count }}</span>
+                <!-- <span class='connect'>联系客服</span> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="money_list">
+            <div class="money_item">
+              <span>商品总额：</span>
+              <span>￥{{ orderdetail.order_amount }}</span>
+            </div>
+          </div> -->
+
+        <div class="money_list">
+          <div class="money_item">
+            <span>订单编号：{{ orderdetail.order_id }}</span>
+          </div>
+          <div class="money_item">
+            <span>下单时间：{{ orderdetail.pay_time }}</span>
+          </div>
+        </div>
+        <!-- <div class="row_flex al_flex be_flex userd" v-show='show_coupon_info' @click='ShowCoupon' >
+            <div>优惠券</div>
+            <div class="row_flex al_flex be_flex">
+              <div><span>{{coupon_down_money}} 元 </span></div>
+            </div>
+          </div> -->
+        <div class="row_flex al_flex be_flex userd" v-show='show_coupon_info'>
+          <div>优惠券</div>
+          <div class="row_flex al_flex be_flex">
+            <div><span>{{coupon_down_money}} 元 </span></div>
+          </div>
+        </div>
+        <!-- <div class="place"></div> -->
+        <!-- <div class="money_pannel" v-show="show_pay_money">
+            <div
+              @click="CancelOrder(orderdetail.order_id)"
+              class="connect_btn_cancel w45 "
+            >
+              取消订单
+            </div>
+
+            <div
+              @click="ConfirmOrder(orderdetail.order_id)"
+              class=" connect_btn_right w45"
+            >
+              支付宝
+            </div>
+
+            <div @click="MoneyHide" class=" connect_btn_cancel wechat w45">
+              暂不支付
+            </div>
+            <div
+              @click="WachatOrder(orderdetail.order_id)"
+              class=" connect_btn_right wechat w45"
+            >
+              微信
+            </div>
+          </div> -->
+        <div class="pay_money row_flex be_flex al_flex " v-show="show_go_money">
+          <div class="real_money">实付：{{orderdetail.caculate_amount}}元</div>
+          <div class="paied" @click="GoMoney">点我支付</div>
+        </div>
+
+        <div class='full_money_pannel' v-show="show_pay_money">
+          <div @click="MoneyHide" class='grey_top_bg'></div>
+          <div class="inner_money col_flex be_flex">
+            <div>
+              <div class='pay_text_tip'>请选择支付方式</div>
+              <div class='zhi_fu_bao row_flex be_flex '>
+                <div class='row_flex al_flex'>
+                  <img class='zhi_fu_icon' src="./imges/zhifubao.png" alt="">
+                  <span>支付宝</span>
+                </div>
+                <div>
+                  <img v-if='mode_of_payment_zhi' @click='Change_zhi' class='zhi_fu_sel'
+                    src="./imges/money_selected.png" alt="">
+                  <img v-else class='zhi_fu_sel' @click='Change_zhi' class='zhi_fu_sel' src="./imges/money_sel.png"
+                    alt="">
+                </div>
+              </div>
+              <div class='zhi_fu_bao row_flex be_flex '>
+                <div class='row_flex al_flex'>
+                  <img class='zhi_fu_icon' src="./imges/green_chat.png" alt="">
+                  <span>微信支付</span>
+                </div>
+                <div class='img_flex'>
+                  <img v-if='mode_of_payment_chat' class='zhi_fu_sel' @click='Change_chat'
+                    src="./imges/money_selected.png" alt="">
+                  <img v-else class='zhi_fu_sel' @click='Change_chat' class='zhi_fu_sel' src="./imges/money_sel.png"
+                    alt="">
+                </div>
+              </div>
+            </div>
+            <div class='go_pay_money col_flex al_flex '>
+              <div class='pay_head' @click='GoAllMoney(orderdetail.order_id)'>支 付</div>
+              <!-- <div class='connect_btn_cancel_no' @click="CancelOrder(orderdetail.order_id)" >取消订单</div> -->
+              <div class='connect_btn_cancel_no' @click="MoneyHide">暂不支付</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- v-show='check_money' -->
+        <div class='confirm_money' v-show='check_money' >
+          <div class='img_flex c_check' >
+            是否完成支付？
+          </div>
+          <div class='f_check row_flex be_flex' >
+            <div @click="MoneyHide" >取消</div><div @click='GoCheckOrder' >是</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- 待发货 -->
+    <div v-cloak v-else-if="current == 2">
+      <div class="order_staus">
+        <div class="order_top">
+          <img class="order_icon" src="./imges/order_icon.png" />
+          <span>{{ orderdetail.order_status_name }}</span>
+        </div>
+        <div class="order_mid"><span> 买家已付款，等待发货 </span></div>
+      </div>
+      <div class="select_addr">
+        <div class="order_address">
+          <div class="order_top">
+            <img class="order_icon" src="./imges/address.png" />
+            <span class="info">{{ orderdetail.receiver_name }}：</span>
+            <span>{{ orderdetail.receiver_tel }}</span>
+          </div>
+          <div class="order_mid">
+            <span>{{ orderdetail.receiver_address }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="order_info">
+        <div class="shop_top">
+          <div class="shop_top">
+            <img class="address_icon" src="./imges/shop_name.png" />
+            <span class="info">{{ orderdetail.dept_name }}</span>
+          </div>
+          <div class="addr_row">
+            <img class="addr_icon" src="./imges/right1.png" />
+          </div>
+        </div>
+
+        <div v-for="(item,id) in orderdetail.orderGoods" :key="item.id">
+          <div class="order_middle">
+            <div class="order_list">
+              <div class="order_list_left">
+                <img class="order_list_left_img" :src="item.goods_mini_img_url" />
+              </div>
+              <div class="order_list_mid">
+                <span class="order_list_mid_text">{{ item.goods_name }}</span>
+                <span class="order_list_mid_text">{{ item.goods_unit_value }}{{ item.goods_unit }}</span>
+              </div>
+              <div class="order_list_right">
+                <span class="text">￥{{ item.transaction_price }}</span>
+                <span class="text">x{{ item.goods_count }}</span>
+                <span class="connect">联系客服</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="money_list">
+          <div class="money_item">
+            <span>商品总额：￥{{ orderdetail.order_amount }}</span>
+            <!--<span>￥{{ orderdetail.order_amount }}</span>-->
+          </div>
+        </div>
+
+        <div class="money_list">
+          <div class="money_item">
+            <span>订单编号：{{ orderdetail.order_id }}</span>
+          </div>
+          <div class="money_item">
+            <span>下单时间：{{ orderdetail.pay_time }}</span>
+          </div>
+        </div>
+        <!-- <div class="place"></div> -->
+        <div class="blank">
+          <span class=" connect_btn_cancel">申请退款</span>
+        </div>
+      </div>
+    </div>
+    <!-- 待收货 -->
+    <div v-cloak v-else-if="current == 3">
+      <div class="order_staus">
+        <div class="order_top">
+          <img class="order_icon" src="./imges/order_icon.png" />
+          <span>{{ orderdetail.order_status_name }}</span>
+        </div>
+        <!-- <div class='order_mid'>
+          <span>
+            显示物流信息
+          </span>
+        </div> -->
+      </div>
+      <div class="select_addr">
+        <div class="order_address">
+          <div class="order_top">
+            <img class="order_icon" src="./imges/address.png" />
+            <span class="info">{{ orderdetail.receiver_name }}：</span>
+            <span>{{ orderdetail.receiver_tel }}</span>
+          </div>
+          <div class="order_mid">
+            <span>{{ orderdetail.receiver_address }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="order_info">
+        <div class="shop_top">
+          <div class="shop_top">
+            <img class="address_icon" src="./imges/shop_name.png" />
+            <span class="info">{{ orderdetail.dept_name }}</span>
+          </div>
+          <div class="addr_row">
+            <img class="addr_icon" src="./imges/right1.png" />
+          </div>
+        </div>
+
+        <div v-for="(item,id) in orderdetail.orderGoods" :key="item.id">
+          <div class="order_middle">
+            <div class="order_list">
+              <div class="order_list_left">
+                <img class="order_list_left_img" :src="item.goods_mini_img_url" />
+              </div>
+              <div class="order_list_mid">
+                <span class="order_list_mid_text">{{ item.goods_name }}</span>
+                <span class="order_list_mid_text">{{ item.goods_unit_value }}{{ item.goods_unit }}</span>
+              </div>
+              <div class="order_list_right">
+                <span class="text">￥{{ item.transaction_price }}</span>
+                <span class="text">x{{ item.goods_count }}</span>
+                <span class="connect">联系客服</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="money_list">
+          <div class="money_item">
+            <span>商品总额：</span>
+            <span>￥{{ orderdetail.order_amount }}</span>
+          </div>
+        </div>
+
+        <div class="money_list">
+          <div class="money_item">
+            <span>订单编号：{{ orderdetail.order_id }}</span>
+          </div>
+          <div class="money_item">
+            <span>下单时间：{{ orderdetail.pay_time }}</span>
+          </div>
+        </div>
+        <!-- <div class="place"></div> -->
+
+        <div class="money_list express " v-show='orderExpress.express_typeName  ? true : false'>
+          <div class="money_item">
+            <span>物流信息：{{ orderExpress.express_typeName }}</span>
+          </div>
+          <div class="money_item">
+            <span>物流单号：{{ orderExpress.order_express_id }}</span>
+          </div>
+        </div>
+
+        <div v-for="item  in orderExpress.orderExpressDistribution " class="money_list">
+          <div class="money_item">
+            <span>{{ item.create_time }}</span>
+          </div>
+          <div class="money_item">
+            <span>{{ item.distribution_message }}</span>
+          </div>
+        </div>
+        <div class="blank">
+          <span class=" connect_btn_right" @click="GoRecieveGood(orderdetail.order_id)">确认收货</span>
+        </div>
+      </div>
+    </div>
+    <!-- 待评价 -->
+    <div v-cloak v-else-if="current == 4">
+      <div class="order_staus" :class="classShow?&quot;bggray&quot;:&quot;&quot;">
+        <div class="order_top">
+          <img class="order_icon" src="./imges/order_icon.png" />
+          <span>{{ orderdetail.order_status_name }}</span>
+        </div>
+      </div>
+      <div class="select_addr">
+        <div class="order_address">
+          <div class="order_top">
+            <img class="order_icon" src="./imges/address.png" />
+            <span class="info">{{ orderdetail.receiver_name }}：</span>
+            <span>{{ orderdetail.receiver_tel }}</span>
+          </div>
+          <div class="order_mid">
+            <span>{{ orderdetail.receiver_address }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="order_info">
+        <div class="shop_top">
+          <div class="shop_top">
+            <img class="address_icon" src="./imges/shop_name.png" />
+            <span class="info">{{ orderdetail.dept_name }}</span>
+          </div>
+          <div class="addr_row">
+            <img class="addr_icon" src="./imges/right1.png" />
+          </div>
+        </div>
+
+        <div v-for="(item,id) in orderdetail.orderGoods" :key="item.id">
+          <div class="order_middle">
+            <div class="order_list">
+              <div class="order_list_left">
+                <img class="order_list_left_img" :src="item.goods_mini_img_url" />
+              </div>
+              <div class="order_list_mid">
+                <span class="order_list_mid_text">{{ item.goods_name }}</span>
+                <span class="order_list_mid_text">{{ item.goods_unit_value }}{{ item.goods_unit }}</span>
+              </div>
+              <div class="order_list_right">
+                <span class="text">￥{{ item.transaction_price }}</span>
+                <span class="text">x{{ item.goods_count }}</span>
+                <span class="connect" @click="GoValue(item.goods_id,item.goods_name,item.goods_mini_img_url)">评价</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="money_list">
+          <div class="money_item">
+            <span>商品总额：</span>
+            <span>￥{{ orderdetail.order_amount }}</span>
+          </div>
+        </div>
+
+        <div class="money_list">
+          <div class="money_item">
+            <span>订单编号：{{ orderdetail.order_id }}</span>
+          </div>
+          <div class="money_item">
+            <span>下单时间：{{ orderdetail.pay_time }}</span>
+          </div>
+        </div>
+        <!-- <div class="place"></div> -->
+        <div class="blank">
+          <!-- <span @click='CancelOrder(orderdetail.order_id)' class=' connect_btn_cancel'>取消订单</span> -->
+          <span class=" connect_btn_right">联系客服</span>
+        </div>
+      </div>
+    </div>
+    <!-- 已完成 -->
+    <div v-cloak v-else-if="current == 5">
+      <div class="order_staus" :class="classShow?&quot;bggray&quot;:&quot;&quot;">
+        <div class="order_top">
+          <img class="order_icon" src="./imges/order_icon.png" />
+          <span>{{ orderdetail.order_status_name }}</span>
+        </div>
+      </div>
+      <div class="select_addr">
+        <div class="order_address">
+          <div class="order_top">
+            <img class="order_icon" src="./imges/address.png" />
+            <span class="info">{{ orderdetail.receiver_name }}：</span>
+            <span>{{ orderdetail.receiver_tel }}</span>
+          </div>
+          <div class="order_mid">
+            <span>{{ orderdetail.receiver_address }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="order_info">
+        <div class="shop_top">
+          <div class="shop_top">
+            <img class="address_icon" src="./imges/shop_name.png" />
+            <span class="info">{{ orderdetail.dept_name }}</span>
+          </div>
+          <div class="addr_row">
+            <img class="addr_icon" src="./imges/right1.png" />
+          </div>
+        </div>
+
+        <div v-for="(item,id) in orderdetail.orderGoods" :key="item.id">
+          <div class="order_middle">
+            <div class="order_list">
+              <div class="order_list_left">
+                <img class="order_list_left_img" :src="item.goods_mini_img_url" />
+              </div>
+              <div class="order_list_mid">
+                <span class="order_list_mid_text">{{ item.goods_name }}</span>
+                <span class="order_list_mid_text">{{ item.goods_unit_value }}{{ item.goods_unit }}</span>
+              </div>
+              <div class="order_list_right">
+                <span class="text">￥{{ item.transaction_price }}</span>
+                <span class="text">x{{ item.goods_count }}</span>
+                <span class="connect">联系客服</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="money_list">
+          <div class="money_item">
+            <span>商品总额：</span>
+            <span>￥{{ orderdetail.order_amount }}</span>
+          </div>
+        </div>
+
+        <div class="money_list">
+          <div class="money_item">
+            <span>订单编号：{{ orderdetail.order_id }}</span>
+          </div>
+          <div class="money_item">
+            <span>下单时间：{{ orderdetail.pay_time }}</span>
+          </div>
+        </div>
+        <!-- <div class="place"></div> -->
+        <div class="blank">
+          <span class=" connect_btn_right">联系客服</span>
+          <!-- <span @click='CancelOrder(orderdetail.order_id)' class=' connect_btn_cancel'>取消订单</span> -->
+        </div>
+      </div>
+    </div>
+    <!-- 优惠券的弹框 -->
+    <div class="dis_pannel" v-show="show_dis_pannel">
+      <div class="row_flex cen_flex al_flex be_flex dis_use">
+        <span>选择优惠券</span>
+        <div @click="CloseDisPannel" class="col_flex al_flex cen_flex">
+          <img class="dis_close" src="./imges/dis-close.png" alt="" />
+        </div>
+      </div>
+
+      <div class="coupon_pannel_list">
+        <div class="dis_list">
+          <div class="dis_item row_flex be_flex al_flex" v-for='item in count_list ' v-show='item.select'>
+            <div class="col_flex ar_flex al_flex dis_item_left ">
+              <span> <i>￥</i> <span class="dis_item_money">{{item.coupon_amount}}</span> </span>
+              <span>{{item.status_name}}</span>
+            </div>
+            <div class="col_flex ar_flex al_flex dis_item_mid">
+              <span v-if="item.coupon_use_condition">满{{item.coupon_use_condition}}使用</span>
+              <span v-else>无门槛使用</span>
+              <span class="dis_item_date">{{item.activity_end_time}}过期</span>
+            </div>
+            <div class="col_flex ar_flex al_flex dis_item_right  ">
+              <div v-if="item.select">
+                <img class="dis_select" src="./imges/carselected.png" alt="" />
+              </div>
+              <div v-else>
+                <img class="dis_select" src="./imges/carselect.png" alt="" />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+
+    </div>
+
+
+  </div>
+</body>
+<script src="./js/base.js"></script>
+<script src="./js/orderdetail.js"></script>
+
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>修改昵称页面</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <script src="./js/pub.js"></script>
+  <link rel="stylesheet" href="./layui/css/layui.mobile.css">
+  <link rel="stylesheet" href="./css/style.css">
+
+  <style>
+    body {
+      background-color: #f5f5f5;
+    }
+
+    #app {
+      padding-top: 0.41rem;
+      font-size: 0.16rem;
+    }
+
+    .po_nav {
+
+      padding: 0 0.2rem 0 0.2rem;
+
+      font-size: 0.18rem;
+      background-color: #fff;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .po_back {
+      width: 0.22rem;
+      height: 0.22rem;
+      display: flex;
+      justify-content: center;
+      align-items: center
+    }
+
+    .po_back_row {
+      width: 0.15rem;
+      height: 0.15rem;
+    }
+
+    .mine_contain {
+      background-color: #fff;
+      margin-top: 0.1rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 0.25rem;
+      align-items: center;
+    }
+
+    .nav_input {
+      height: 0.62rem;
+      padding-left: 0.05rem;
+      width: 80%;
+      font-size: 0.18rem;
+      border: none;
+    }
+
+    .closename {
+      width: 0.5rem;
+      height: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .name_icon {
+      width: 0.25rem;
+      height: 0.25rem;
+    }
+
+    .foot {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 0.50rem;
+      margin-top: 1rem;
+      position: fixed;
+      bottom: 0.25rem;
+      left: 0;
+      width: 100%;
+    }
+
+    .save {
+      width: 1.5rem;
+      height: 0.5rem;
+      line-height: 0.5rem;
+      text-align: center;
+      background-color: #e61e56;
+      color: #fff;
+      border-radius: 0.25rem;
+    }
+  </style>
+</head>
+
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+
+<body>
+
+  <div id="app">
+    <div class="po_nav">
+      <div @click='back()' class="po_back">
+        <img class='po_back_row' src='./imges/back1.png'>
+      </div>
+      <div>修改昵称</div>
+      <div v-on:click='SaveName(person.customer_id)'>保存</div>
+    </div>
+    <!-- 内容 -->
+    <div v-cloak class='mine_contain'>
+      <div class='nav'>
+        <input bindinput='bindKeyInput' class='nav_input' v-model='ipt'></input>
+        <div class='closename'>
+          <img v-on:click='Zero' class='name_icon' src='./imges/closename.png'></img>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- js -->
+  <script src="./js/jquery-1.12.4.js"></script>
+  <script>
+    var pub_url = pub.url;
+    // 截取传来的字符串
+    var strHref = location.href;
+    if (strHref.indexOf("?") > 0) {
+      var intPos = strHref.indexOf("?");
+      // 从二级分类跳转过来的二级id
+      var intPosLen = intPos + 4;
+      var num = strHref.substring(intPosLen, strHref.length);
+      var id = num;
+    } else {
+      var id = "none";
+    }
+
+
+    var app = new Vue({
+      el: "#app",
+      data: {
+        people_id: "",
+        person: {},
+        ipt: '',
+        op_data: {}
+      },
+      created() {
+
+        this.people_id = id;
+        var data = {
+          customer_id: this.people_id
+        };
+        const that = this
+
+        pub._Init(that, pub.url, pub.detail_api.findCustomer, data, this.Set)
+      },
+      methods: {
+
+        /**
+         * 回调函数
+         */
+        Set(res) {
+          var that = this;
+          that.show = true;
+          that.person = res.data[0].CustomerInfo;
+
+          this.ipt = res.data[0].CustomerInfo.customer_nickname
+
+        }
+
+        /**
+          *  点击 输入框清零 
+          */
+        , Zero() {
+          this.ipt = ''
+        }
+
+        /*
+        * 保存事件
+        */
+        , SaveName(parm) {
+          var that = this;
+          var data = {
+            'customer_id': this.people_id,
+            'customerinfo': {
+              'customer_nickname': this.ipt
+            }
+          }
+          that.op_data = data
+
+          pub._Init(that, pub.url, pub.detail_api.editCustomer, data, this.cb_two)
+
+        },
+        cb_two(res) {
+          if (res.stateCode == 200) {
+            const that = this
+
+            alert('修改昵称成功')
+
+            pub._Init(that, pub.url, pub.detail_api.findCustomer, that.op_data, this.Set)
+          } else {
+
+          }
+        },
+        /**
+        * 返回上一级
+        */
+        back() {
+          window.history.go(-1)
+        }
+        //
+      }
+    });
+
+  </script>
+</body>
+
+</html>

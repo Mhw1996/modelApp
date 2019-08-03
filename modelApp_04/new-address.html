@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>地址编辑、新建页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <link rel="stylesheet" href="./css/style.css">
+
+<link rel="stylesheet" href="./css/new-address.css">
+<style>
+    [v-cloak]{
+      display: none !important
+    }
+</style>
+</head>
+<script src="./js/pub.js"></script>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+
+<body>
+  <div id="app">
+    <div>
+      <!-- 头部 -->
+      <nav>
+        <div @click='back()' class="back">
+          <img class='back_row' src='./imges/back1.png'>
+        </div>
+        <div>{{top}} </div>
+     
+        <div v-if='show' @click.stop.prevent='ChangeSave()' class="search_scan"> 保存 </div>
+        <div  @click.stop.prevent='Save()' v-else class="search_scan">
+            保存
+          </div>
+      </nav>
+    </div>
+    <!-- 内容 -->
+    <!-- 编辑 -->
+    
+    <!-- 新增 -->
+    <div v-cloak >
+      <div class="new_item">
+        <input v-model='Per_name' class="plan" type="text" placeholder="收货人姓名">
+      </div>
+      <div class="new_item">
+        <input  v-model='Per_phone' @blur='_Phone'  class="plan" type="number" placeholder="手机号码">
+      </div>
+      <!-- 省 --> 
+      <div class="new_item">
+        <select @change='City(ProvinceCode)' v-model='ProvinceCode' class="plan">
+          <option  value="">{{province_name}}</option>
+          <option v-for='item in ProvinceList'  :key='item.code' :value="item.code">{{item.name}}</option>
+        </select>
+      </div>
+      <!-- 市 -->
+      <div class="new_item">
+        <select @change='Area(CityCode)' v-model='CityCode'  class="plan">
+            <option  value="">{{city_name}}</option>
+            <option v-for='item in CityList'  :key='item.code' :value="item.code">{{item.name}}</option>
+        </select>
+      </div>
+      <!-- 区 -->
+      <div class="new_item">
+        <select  v-model='AreaCode' class="plan">
+            <option  value="">{{area_name}}</option>
+            
+            <option v-for='item in AreaList'  :key='item.code' :value="item.code">{{item.name}}</option>
+        </select>
+      </div>
+      <!-- 详细地址 -->
+      <div class="new_item" >
+        <textarea v-model="Per_detail" class="new_detail" class=detail_info  placeholder="输入详细地址" ></textarea>
+      </div>
+    </div>
+   
+  </div>
+
+  <script src="./js/new-address.js">
+  
+
+  </script>
+</body>
+
+</html>

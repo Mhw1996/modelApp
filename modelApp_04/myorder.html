@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>我的订单</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/myorder.css">
+  <style>
+      [v-cloak]{
+        display: none !important
+      }
+      .more{
+        height: 1.5rem;
+        line-height: 1.5rem;
+        width: 100%;
+        text-align: center;
+        font-size: 0.12rem;
+        color: #c5c1c1;
+      }
+  </style>
+</head>
+<script src="./js/pub.js"></script>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+
+<body>
+  <div id="app">
+    <nav>
+      <div @click='back' class="back">
+        <img class='back_row' src='./imges/back1.png'>
+      </div>
+      <div>我的订单</div>
+      <div class="search_scan"> </div>
+    </nav>
+    <!-- 头部导航 -->
+    <div class='nav'>
+      <div v-for='(item,id) in top' :key='item.id' @click.stop='miTopTab(item.id)' class='nav_name' v-bind:class=' item.id == topcurrent ? "nav_name_act" : ""  '>{{item.info}}</div>
+    </div>
+
+    <!-- 各类订单详情 -->
+    <div v-cloak v-if='items.length'>
+      <!-- 待付款 -->
+      <div v-if='topcurrent == 1'>
+        <div class='container_list'>
+          <div v-for="(item,id) in items" :key='item.id'> 
+            <div class='con_item  content'>
+              <div class='item_top'> 
+                <div class='item_items'>
+                  <img class='item_img' src='./imges/shop_name.png'>
+                  <span>{{item.dept_name}}</span>
+                </div>
+                <div class='order_status'>
+                  {{item.order_status_name}}
+                </div>
+              </div>
+              <div @click='GoOrderDetail(item.order_id,item.dept_id)' class='item_photo'>
+                <div v-for="(item,id) in item.orderGoods" :key='item.id' class='photos'>
+                  <img class='photo_img' :src="item.goods_mini_img_url"></img>
+                </div>
+              </div>
+
+              <div class='item_foot'>
+                <div class='foot_left'>
+                  <span>实付：</span>
+                  <span>￥{{item.order_amount}}</span>
+                  <span class='total_num'>共计{{item.orderGoods.length}}件商品</span>
+                </div>
+                <!-- <div @click='GoOrderDetail(item.order_id,item.dept_id)' class='foot_right'>详情</div> -->
+                <div @click='GoOrderDel(item.order_id,item.dept_id)' class='foot_right'>取消</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 待发货 -->
+      <div v-else-if='topcurrent == 2'>
+        <div class='container_list'>
+          <div v-for="(item,id) in items" :key='item.id'>
+            <div class='con_item  content'>
+              <div class='item_top'>
+                <div class='item_items'>
+                  <img class='item_img' src='./imges/shop_name.png'>
+                  <span>{{item.dept_name}}</span>
+                </div>
+                <div class='order_status'>
+                  {{item.order_status_name}}
+                </div>
+              </div>
+              <div @click='GoOrderDetail(item.order_id)' class='item_photo'>
+                <div v-for="(item,id) in item.orderGoods" :key='item.id' class='photos'>
+                  <img class='photo_img' :src="item.goods_mini_img_url"></img>
+                </div>
+              </div>
+
+              <div class='item_foot'>
+                <div class='foot_left'>
+                  <span>实付：</span>
+                  <span>￥{{item.order_amount}}</span>
+                  <span class='total_num'>共计{{item.orderGoods.length}}件商品</span>
+                </div>
+                <!-- <div @click='GoOrderDetail(item.order_id)' class='foot_right'>去付款</div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 待收货 -->
+      <div v-else-if='topcurrent == 3'>
+        <div class='container_list'>
+          <div v-for="(item,id) in items" :key='item.id'>
+            <div class='con_item  content'>
+              <div class='item_top'>
+                <div class='item_items'>
+                  <img class='item_img' src='./imges/shop_name.png'>
+                  <span>{{item.dept_name}}</span>
+                </div>
+                <div class='order_status'>
+                  {{item.order_status_name}}
+                </div>
+              </div>
+              <div @click='GoOrderDetail(item.order_id)' class='item_photo'>
+                <div v-for="(item,id) in item.orderGoods" :key='item.id' class='photos'>
+                  <img class='photo_img' :src="item.goods_mini_img_url"></img>
+                </div>
+              </div>
+
+              <div class='item_foot'>
+                <div class='foot_left'>
+                  <span>实付：</span>
+                  <span>￥{{item.order_amount}}</span>
+                  <span class='total_num'>共计{{item.orderGoods.length}}件商品</span>
+                </div>
+                <div @click='GoOrderDetail(item.order_id)' class='foot_right'>确认收货</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 待评价 -->
+      <div v-else-if='topcurrent == 4'>
+        <div class='container_list'>
+          <div v-for="(item,id) in items" :key='item.id'>
+            <div class='con_item  content'>
+              <div class='item_top'>
+                <div class='item_items'>
+                  <img class='item_img' src='./imges/shop_name.png'>
+                  <span>{{item.dept_name}}</span>
+                </div>
+                <div class='order_status'>
+                  {{item.order_status_name}}
+                </div>
+              </div>
+              <div @click='GoOrderDetail(item.order_id)' class='item_photo'>
+                <div v-for="(item,id) in item.orderGoods" :key='item.id' class='photos'>
+                  <img class='photo_img' :src="item.goods_mini_img_url"></img>
+                </div>
+              </div>
+
+              <div class='item_foot'>
+                <div class='foot_left'>
+                  <span>实付：</span>
+                  <span>￥{{item.order_amount}}</span>
+                  <span class='total_num'>共计{{item.orderGoods.length}}件商品</span>
+                </div>
+                <div @click='GoOrderDetail(item.order_id)' class='foot_right'>去评价</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 已完成 -->
+      <div v-else='topcurrent == 5'>
+        <div class='container_list'>
+          <div v-for="(item,id) in items" :key='item.id'>
+            <div class='con_item  content'>
+              <div class='item_top'>
+                <div class='item_items'>
+                  <img class='item_img' src='./imges/shop_name.png'>
+                  <span>{{item.dept_name}}</span>
+                </div>
+                <div class='order_status'>
+                  {{item.order_status_name}}
+                </div>
+              </div>
+              <div @click='GoOrderDetail(item.order_id)' class='item_photo'>
+                <div v-for="(item,id) in item.orderGoods" :key='item.id' class='photos'>
+                  <img class='photo_img' :src="item.goods_mini_img_url"></img>
+                </div>
+              </div>
+
+              <div class='item_foot'>
+                <div class='foot_left'>
+                  <span>实付：</span>
+                  <span>￥{{item.order_amount}}</span>
+                  <span class='total_num'>共计{{item.orderGoods.length}}件商品</span>
+                </div>
+                <!-- <div @click='GoOrderDel(item.order_id)' class='foot_right'>删除</div> -->
+				<div v-if="item.order_status_id == 'in_padment'" @click='GoOrderDel(item.order_id,item.dept_id)' class='foot_right'>取消</div>
+				 <div  v-if="item.order_status_id == 'in_receive'" @click='GoOrderDetail(item.order_id)' class='foot_right'>确认收货</div>
+				  <div v-if="item.order_status_id == 'in_evaluate'" @click='GoOrderDetail(item.order_id)' class='foot_right'>去评价</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div @click='GoMore()' v-if='items.length > 90' class="more" >
+        加载更多
+      </div>
+    </div>
+    <div v-cloak v-else>
+      <div @click='GoIndex' class="index">
+        暂无订单，点我去首页 
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+  <script src="./js/myorder.js"></script>
+</body>
+
+</html>

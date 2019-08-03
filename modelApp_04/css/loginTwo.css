@@ -1,0 +1,88 @@
+.img_logo{
+  margin-top: 0.8rem;
+  height: 1rem;
+  margin-bottom: 0.5rem;
+}
+.nav_top{
+  height: 0.5rem;
+  background-color: #cf5f4c;
+  width: 2.8rem;
+  margin:  0 auto;
+  border-radius: 0.5rem;
+  color: white;
+}
+.nav_top_child{
+  width: 45%;
+  height: 78%;
+  text-align: center;
+  line-height: 0.4rem;
+}
+.nav_top_act{
+  background-color: white;
+  border-radius: 0.5rem;
+  color: black
+}
+.work{
+  width: 3rem;
+  margin: 0.2rem auto;
+  padding: 0.15rem 0.05rem 0.35rem;
+  background-color: white;
+  border-radius: 0.1rem;
+  position: relative;
+}
+.work_bottom_line{
+  border-bottom: 0.01rem solid #ebebeb
+}
+.worker_item{
+  height: 0.5rem;
+
+}
+.worker_ipt{
+  border: none;
+  height: 75%;
+  margin-left: 0.05rem;
+  width: 62%;
+  margin-right: 0.05rem;
+  
+}
+.worker_child{
+  height: 100%;
+
+}
+.work_img{
+  width: 0.18rem;
+  margin-left: 0.05rem;
+}
+.worker_btn{
+  width: 2.5rem;
+  height: 0.5rem;
+  position: absolute;  
+  bottom:-0.3rem;
+  color: white;
+  line-height: 0.5rem;
+  text-align: center;
+  left: 50%;
+  margin-left: -1.25rem;
+  background:-moz-linear-gradient(right,#ff9b5e,#e61e56);
+  background: -webkit-gradient(linear, left top, left bottom, from(#ff9b5e), to(#e61e56));
+  background:-webkit-linear-gradient(right,#ff9b5e,#e61e56);
+  background:-o-linear-gradient(right,#ff9b5e,#e61e56);
+  border-radius: 0.15rem;
+}
+.change_msg{
+  width: 2.5rem;
+  margin: 0.4rem auto;
+  height: 0.5rem;
+  text-align: center;
+  line-height: 0.5rem;
+  color: white;
+  background-color: transparent;
+  text-decoration: underline
+}
+.work_code{
+  font-size: 0.14rem;
+  color: #e61e56;
+  background-color: #fff0f4;
+  padding: 0.05rem 0.1rem;
+  border-radius: 0.15rem;
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <title>购物车</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/car.css">
+  <style>
+    [v-cloak]{
+      display: none !important
+    }
+  </style>
+</head>
+<script src="./js/pub.js"></script>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+
+<body>
+  <div id="app" >
+    <!-- <nav>
+      <div v-if='goback' @click='back' class="back">
+        <img class='back_row' src='./imges/back1.png'>
+      </div>
+      <div>我的购物车</div>
+      <div class="search_scan"> </div>
+    </nav> -->
+    <!-- 拿到数据显示 -->
+    <div v-cloak v-if='total.length'>
+      <div v-for="(item,id) in total" :key='item.id' class='car_list'>
+        <div class='row_flex be_flex al_flex dis_need'>
+          <div class='item_title'>
+            <img class='items_img' src='./imges/shop_name.png'>
+            <span>{{item.dept_name}}</span>
+          </div>
+          <div @click='GoDisCount(item.dept_id,item.goods_id)' >领劵</div>
+        </div>
+        <div class='item_info'>
+          <div class="itemimg">
+            <img v-if='item.single_selected' @click='SelectImg(item.goods_id)' class='item_img' src='./imges/carselected.png'>
+            <img v-else='item.single_selected' @click='SelectImg(item.goods_id)' class='item_img' src='./imges/carselect.png'>
+          </div>
+          <div @click='GoDetail(item.goods_id,item.dept_id)' class='item_info_photo'>
+            <img  class='item_info_img' :src='item.goods_mini_img_url'>
+          </div>
+          <div class='item_info_text'>
+            <div class='info_span'>{{item.goods_name}}</div>
+            <div class='format'>{{item.goods_unit_value}}{{item.goods_unit}}</div>
+            <div class='item_info_introduce'>
+              <span class='price'>￥{{item.goods_price}}</span>
+              <div class='introduce'>
+                <img @click='Cardown(item.goods_id)' class='item_icon' src='./imges/cardown.png'>
+                <input @blur="func(item.goods_id)" v-model='item.goods_count' v-on:input="inputFunc(item.goods_id)" class='item_icon_text'>
+                <img @click='Caradd(item.goods_id)' class='item_icon' src='./imges/caradd.png'>
+                <img @click="DelGood(item.universalid)" class='item_icon cardel' src='./imges/cardel.png'>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 占位 -->
+      <div class="place"></div>
+      <!-- 全选去结算 -->
+      <div class='footer'>
+        <div class='foot_left'>
+          <img @click='Allselect' v-if='allselected' class='item_img' src='./imges/carselected.png'>
+          <img @click='Allselect' v-else class='item_img' src='./imges/carselect.png'>
+          <span>全选</span>
+        </div>
+        <div>
+          <span class='total_price'>总计:￥{{totalPrice}}</span>
+        </div>
+        <div @click='GoBuy' class='gobuy'>去结算</div>
+      </div>
+    </div>
+    <!-- 没有数据去首页 -->
+    <div   @click='GoIndex' v-else  class="index" >
+         暂无商品，点我去首页 
+    </div>
+
+
+
+
+    <footer>
+      <a class="foot_div foot_div_one">
+        <img class="footer_img" src="./imges/home0.png" alt="">
+        <span class="foot_span">首页</span>
+      </a>
+      <!-- <a class="foot_div foot_div_two" target="blank">
+        <img class="footer_img" src="./imges/classify0.png" alt="">
+        <span class="foot_span">分类</span>
+      </a> -->
+      <a class="foot_div foot_div_three" target="blank">
+        <img class="footer_img" src="./imges/shop-cart1.png" alt="">
+        <span class="foot_span footer_red_color">购物车</span>
+      </a>
+      <a class="foot_div foot_div_four" target="blank">
+        <img class="footer_img" src="./imges/my0.png" alt="">
+        <span class="foot_span">我的</span>
+      </a>
+    </footer>
+
+    <!-- 优惠券的弹框 -->
+    <div class='_cou_panel' v-show='show_dis_pannel' >
+      <div class='dis_pannel  '  >
+        <div class='row_flex cen_flex al_flex be_flex dis_use' >
+          <span>领优惠券</span>
+          <div @click='CloseDisPannel' class='col_flex al_flex cen_flex' >
+            <img class='dis_close' src="./imges/dis-close.png" alt="">
+          </div>
+        </div>
+        <div class='coupon_pannel_list' >
+          <div class='dis_list' v-if='count_list.length > 0' v-for = 'item in count_list' >
+            <div class='dis_item row_flex be_flex al_flex' v-bind:class='item.coupon_send_status == "CLOSE" ? "go_userd_bg" :"" '  >
+              <div class='col_flex ar_flex al_flex dis_item_left ' >
+                <span  > <i>￥</i> <span class='dis_item_money' >{{item.coupon_amount}}</span> </span>
+                <span>-- 店铺劵 --</span>
+              </div>
+              <div class='col_flex ar_flex al_flex dis_item_mid'>
+                <span v-if='item.coupon_use_condition' >满{{item.coupon_use_condition}}使用</span>
+                <span v-else >无门槛使用</span>
+                <span class='dis_item_date' >{{item.activity_end_time}} 过期</span>
+              </div>
+              <div @click='GoReceive(item.coupon_id)' class='col_flex ar_flex al_flex dis_item_right '>
+               <!-- <span  class='go_userd'  >立即领取</span>-->
+				 <span v-if='item.coupon_send_status == "OPEN"' class='go_userd'  >立即领取</span>
+                <span v-else class='go_user' >已领取</span>
+              </div>
+            </div>
+          </div>
+          <div v-else class='no_dis_count' >
+            该店铺暂无优惠券
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+  <script src="./js/footer.js"></script>
+  <script src="./js/car.js"></script>
+
+</body>
+
+</html>

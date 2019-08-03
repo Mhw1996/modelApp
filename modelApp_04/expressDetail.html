@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>评价详情</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/expressDetail.css">
+  <style>
+      [v-cloak]{
+        display: none !important
+      }      
+  </style>
+</head>
+<script src="./js/pub.js"></script>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+</head>
+<body> 
+    <div id="app" v-cloak>
+      <div>
+        <div class="po_nav">
+          <div @click='back()' class="po_back">
+            <img class='po_back_row' src='./imges/back1.png'>
+          </div>
+          <div>评价详情</div>
+          <div></div>
+        </div>
+        <div>
+          <div class='col_flex ' > 
+            <div class='express_block' >             
+              <div class=' express_good row_flex al_flex ' >
+                <!-- <div class='exppress_photo img_flex' >
+                  <img class='express_img' src="./imges/100.png" alt="">
+                </div> -->
+                <div class='express_text col_flex ' >
+                  <div class='express_text_name' >{{detail.product_name}}</div>
+                  <div class='exppress_text_unit'>{{detail.product_evaluation_stateName}}</div>
+                  <div class='row_flex al_flex be_flex' >
+                    <!-- <div class='exppress_text_unit' >0.2元</div> -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class='col_flex first_express ' >
+            <div class='express_left' >{{mine.customer_name}}:{{detail.add_time}}</div>
+            <div class='express_right' >{{detail.product_evaluation_description}}</div>
+            <div class='row_flex pnotos'  >
+              <div class='exppress_photos img_flex' v-for='it in detail.one_img_arr' >
+                <img class='express_imgs' :src="it" alt="" @click='GigImg(it)' >
+              </div>
+            </div>
+          </div>
+          <div class='col_flex first_express ' v-show='detail.product_evaluation_reply' >
+            <div class='express_left ' >商家回复：</div>
+            <div class='express_right right_info' >{{detail.product_evaluation_reply}}</div>
+          </div>
+          <div class='col_flex first_express ' v-show='detail.product_evaluation_addition_description' >
+              <div class='express_left' >我的追评 :</div>
+              <div class='express_right' >{{detail.product_evaluation_addition_description}}</div>
+              <div class='row_flex pnotos'  >
+                <div class='exppress_photos img_flex' v-for='it in detail.two_img_arr' >
+                  <img class='express_imgs' :src="it" alt=""  @click='GigImg(it)'>
+                </div>
+              </div>
+            </div>
+            <div class='col_flex first_express' v-show='detail.product_evaluation_addition_reply' >
+              <div class='express_left ' >商家回复：</div>
+              <div class='express_right right_info' >{{detail.product_evaluation_addition_reply}}</div>
+            </div>
+        </div>
+      </div>
+      <div v-if='pannel' class='pannel img_flex' @click='Look' >
+        <img class='pannel_img' :src="pan_str" alt="">
+      </div>
+    </div>
+
+
+
+    <script src="./js/expressDetail.js"></script>
+</body>
+</html>

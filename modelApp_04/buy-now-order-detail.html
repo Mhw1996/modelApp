@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>确认订单</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/buy-now-order-detail.css">
+  <style>
+      [v-cloak]{
+        display: none !important
+      }
+  </style>
+</head>
+<script src="./js/pub.js"></script>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+
+<body>
+  <div id="app" v-cloak> 
+    <div class="po_nav">
+      <div @click='back()' class="po_back">
+        <img class='po_back_row' src='./imges/back1.png'>
+      </div>
+      <div>确认订单</div>
+      <div></div>
+    </div>
+    <div  >
+      <div  @click="chooseAddress" v-if='addr_change == 1' class='select_addr'>
+        <div class='order_address'>
+          <div class='order_top'>
+            <img class='order_icon' src='./imges/address.png'>
+            <span class='info'>收货人：{{edit_address.receive_name}}</span>
+            <span>{{edit_address.receive_tel}}</span>
+          </div>
+          <div class='order_mid'>
+            <span>收货地址：{{edit_address.province_name}}{{edit_address.city_name}}{{edit_address.area_name}}{{edit_address.receive_address}}</span>
+          </div>
+        </div>
+        <div class='addr_row'>
+          <img class='addr_icon' src='./imges/right1.png'>
+        </div>
+      </div>
+      <div  @click="chooseAddress" v-else-if= 'addr_change == 0' class='select_addr'>
+        <div class='order_address'>
+          <div class='order_top'>
+            <img class='order_icon' src='./imges/address.png'>
+            <span class='info'>收货人：{{receiveAddress.receive_name}}：</span>
+            <span>{{receiveAddress.receive_tel}}</span>
+          </div>
+          <div class='order_mid'>
+            <span>收货地址：{{receiveAddress.province_name}}{{receiveAddress.city_name}}{{receiveAddress.area_name}}{{receiveAddress.receive_address}}</span>
+          </div>
+        </div>
+        <div  class='addr_row'>
+          <img class='addr_icon' src='./imges/right1.png'>
+        </div>
+      </div>
+      <div  @click="chooseAddress" v-else-if= 'addr_change == 2' class='select_addr'>
+          <div class='order_address'>
+            <div class='order_top'>
+              <img class='order_icon' src='./imges/address.png'>
+              <span class='info'>请选择地址</span>
+              <span></span>
+            </div>
+            <div class='order_mid'>
+              <span></span>
+            </div> 
+          </div>
+          <div  class='addr_row'>
+            <img class='addr_icon' src='./imges/right1.png'>
+          </div>
+        </div>
+
+      <div v-for='item in goods' :key='item.universalid'>
+        <div class='order_info'>
+          <div class='order_top'>
+            <img class='address_icon' src='./imges/shop_name.png'></img>
+            <span class='info'>{{item.dept_name}}</span>
+            <!-- <img class='row' src='./imges/right1.png'></img> -->
+          </div>
+          <div class='order_middle'>
+            <div class='order_list'>
+              <div class='order_list_left'>
+                <img class='order_list_left_img' :src='item.goods_mini_img_url'></img>
+              </div>
+              <div class='order_list_mid'>
+                <span class='order_list_mid_text'>{{item.goods_name}}</span>
+                <span class='order_list_mid_text'>{{item.goods_unit_value}}{{item.goods_unit}}</span>
+              </div>
+              <div class='order_list_right'>
+                <span class='text'>￥{{item.goods_price}}</span>
+                <span class='text'>x{{item.goods_count}}</span>
+              </div>
+            </div>
+          </div>
+          <!--<div class='buyer_write'>
+            <span>买家留言：</span>
+            <input class='buy_input' placeholder='给商家留言，最多50字' maxlength='50'></input>
+          </div>-->
+        </div>
+      </div>
+
+      <!-- 优惠券信息 -->
+      <div class="row_flex al_flex be_flex userd" v-show='show_coupon_info' @click='ShowCoupon' >
+        <div>优惠券</div>
+        <div class="row_flex al_flex be_flex">
+          <div><span>{{coupon_price_detail}} 元 </span></div>
+          <div><img class="addr_icon" src="./imges/shop_skan.png" /></div>
+        </div>
+      </div>
+
+       <!-- 优惠券的弹框 -->
+       <div class='_cou_panel' v-show="show_dis_pannel" >
+        <div class="dis_pannel" >
+          <div class="row_flex cen_flex al_flex be_flex dis_use">
+            <span>选择优惠券</span>
+            <div  class="col_flex al_flex cen_flex" @click='CloseCoupon' >
+              <img class="dis_close" src="./imges/dis-close.png" alt="" />
+            </div>
+          </div>
+  
+          <div class="coupon_pannel_list"  >
+            <div class="dis_list" v-for='item in count_list' >
+              <div class="dis_item row_flex be_flex al_flex" @click='GoSelect(item.coupon_id)' v-if='item.coupon_id == "" ? true :false'  >
+                
+                <div class="col_flex ar_flex al_flex dis_item_left ">
+                  <span> <i>￥</i> <span class="dis_item_money">0</span> </span>
+                  <span>{{item.status_name}}</span>
+                </div>
+                <div class="col_flex ar_flex al_flex dis_item_mid">
+                  <span class="dis_item_date">不使用优惠券</span>
+                </div>
+                <div class="col_flex ar_flex al_flex dis_item_right  ">
+                  <div v-if='item.select' >
+                    <img class="dis_select"     src="./imges/carselected.png" alt="" />
+                  </div> 
+                  <div v-else >
+                    <img class="dis_select" src="./imges/carselect.png" alt="" />
+                  </div>                
+                </div>
+              </div>
+
+              <div class="dis_item row_flex be_flex al_flex" @click='GoSelect(item.coupon_id)' v-else  >
+                <div class="col_flex ar_flex al_flex dis_item_left ">
+                  <span> <i>￥</i> <span class="dis_item_money">{{item.coupon_amount}}</span> </span>
+                  <span>{{item.status_name}}</span>
+                </div>
+                <div class="col_flex ar_flex al_flex dis_item_mid">
+                  <span v-if="item.coupon_use_condition" >满{{item.coupon_use_condition}}使用</span    >
+                  <span v-else>无门槛使用</span>
+                  <span class="dis_item_date">{{item.activity_end_time}}过期</span>
+                </div>
+                <div class="col_flex ar_flex al_flex dis_item_right  ">
+                  <div v-if='item.select' >
+                    <img class="dis_select"     src="./imges/carselected.png" alt="" />
+                  </div> 
+                  <div v-else >
+                    <img class="dis_select" src="./imges/carselect.png" alt="" />
+                  </div>                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       </div>
+      
+
+      <div class="place"></div>
+      <div class='blank'>
+        <!-- <span class=' connect_btn_cancel'>实付款：￥{{money}}</span> -->
+        <span class='_real_money' >实付款：￥{{money}}</span>
+        <span @click='SubmitNowOrder' class=' connect_btn_right'>去付款</span>
+        <!-- <span @click='show_pay_money = true' class=' connect_btn_right'>去付款1</span> -->
+      </div>
+
+      <!-- <div class="money_pannel" v-show="show_pay_money">
+        <div @click="MoneyHide" class=" connect_btn_cancel wechat w45">
+          暂不支付
+        </div>
+        <div
+          @click="ConfirmOrder(_orderid)"
+          class=" connect_btn_right w45"
+        >
+          支付宝
+        </div>
+
+        
+        <div
+          @click="WachatOrder(_orderid)"
+          class=" connect_btn_right wechat w45"
+        >
+          微信
+        </div>
+      </div> -->
+    </div>
+
+    <div class='_no_user' v-show='fail_login' >
+      {{fail_login_msg}}
+     </div>
+     <!-- <div class='_no_user'  >
+      立即结算商品失败
+     </div> -->
+
+      <div class='full_money_pannel' v-show="show_pay_money" >
+        <div @click="MoneyHide" class='grey_top_bg' >
+
+        </div>
+        <div class="inner_money col_flex be_flex" >
+          <div>
+            <div class='pay_text_tip' >请选择支付方式</div>
+            <div class='zhi_fu_bao row_flex be_flex ' >
+              <div class='row_flex al_flex' >
+               <img class='zhi_fu_icon' src="./imges/zhifubao.png" alt="">
+               <span>支付宝</span>
+              </div>
+              <div>
+                  <img v-if='mode_of_payment_zhi' @click='Change_zhi' class='zhi_fu_sel' src="./imges/money_selected.png" alt="">
+                  <img v-else class='zhi_fu_sel'  @click='Change_zhi' class='zhi_fu_sel' src="./imges/money_sel.png" alt="">
+              </div>
+            </div>
+            <div class='zhi_fu_bao row_flex be_flex ' >
+              <div class='row_flex al_flex' >
+                <img class='zhi_fu_icon' src="./imges/green_chat.png" alt="">
+                <span>微信支付</span>
+              </div>
+              <div class='img_flex' >
+                <img v-if='mode_of_payment_chat' class='zhi_fu_sel' @click='Change_chat' src="./imges/money_selected.png" alt="">
+                <img v-else class='zhi_fu_sel' @click='Change_chat' class='zhi_fu_sel'  src="./imges/money_sel.png" alt="">
+              </div>
+            </div>
+          </div>
+          <!-- <div class='go_pay_money img_flex ' @click='GoAllMoney(_orderid)' >
+            <div class='pay_head' >支 付</div>
+          </div> -->
+
+          <div class='go_pay_money img_flex ' @click='SubmitNowOrder()' >
+            <div class='pay_head' >支 付</div>
+          </div> 
+        </div>
+      </div>
+
+  </div>
+  
+
+  <script src="./js/buy-now-order-detail.js"></script>
+
+</body>
+
+</html>

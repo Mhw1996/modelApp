@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no"
+    />
+    <link rel="Shortcut Icon" href="./favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>我的优惠劵</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/myDisCount.css" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+      .more {
+        height: 1.5rem;
+        line-height: 1.5rem;
+        width: 100%;
+        text-align: center;
+        font-size: 0.12rem;
+        color: #c5c1c1;
+      }
+    </style>
+  </head>
+  <script src="./js/pub.js"></script>
+  <script src="./js/jquery-1.12.4.js"></script>
+  <script src="./js/vue.js"></script>
+  <script src="./js/rem.js"></script>
+
+  <body>
+    <div id="app" v-cloak>
+      <nav>
+        <div @click="back" class="back">
+          <img class="back_row" src="./imges/back1.png" />
+        </div>
+        <div>我的优惠劵</div>
+        <div class="search_scan"></div>
+      </nav>
+      <!-- 头部导航 -->
+      <div class="nav">
+        <div
+          class="nav_name"
+          @click="GoTab(&quot;all&quot;)"
+          v-bind:class="current == &quot;all&quot; ? &quot;act_tab&quot; :&quot;&quot; "
+        >
+          全部类型
+        </div>
+        <div
+          class="nav_name"
+          @click="GoTab(&quot;shop&quot;)"
+          v-bind:class="current == &quot;shop&quot; ? &quot;act_tab&quot; :&quot;&quot; "
+        >
+          店铺优惠劵
+        </div>
+        <div
+          class="nav_name"
+          @click="GoTab(&quot;good&quot;)"
+          v-bind:class="current == &quot;good&quot; ? &quot;act_tab&quot; :&quot;&quot; "
+        >
+          商品优惠劵
+        </div>
+      </div>
+
+      <!-- 各类优惠券 -->
+      <div class="all_list" v-if="total_arr.length > 0">
+        <div v-show="current == &quot;all&quot;">
+          <div class="list  " v-for="item in total_arr">
+            <div class="row_flex be_flex al_flex">
+              <div class="row_flex al_flex">
+                <div><img class="shop_img" :src="item.shop_img" alt="" /></div>
+                <div>{{ item.shop_name }}</div>
+              </div>
+              <!-- <div class="go_shop" @click='GoShop(item.shop_id)' >进店</div> -->
+            </div>
+
+            <div
+              class="dis_item row_flex be_flex al_flex"
+              v-for="s_item in item.shopCoupon"
+            >
+              <div class="col_flex ar_flex al_flex dis_item_left ">
+                <span>
+                  <i>￥</i>
+                  <span class="dis_item_money">{{ s_item.coupon_amount }}</span>
+                </span>
+                <span>{{ s_item.status_name }}</span>
+              </div>
+              <div class="col_flex ar_flex al_flex dis_item_mid">
+                <span v-if="s_item.coupon_use_condition"
+                  >满{{ s_item.coupon_use_condition }}使用</span
+                >
+                <span v-else>无门槛使用</span>
+                <span class="dis_item_date"
+                  >{{ s_item.activity_end_time }} 过期</span
+                >
+              </div>
+              <div class="col_flex ar_flex al_flex dis_item_right ">
+                <div class="usering" @click="GoShop(s_item.shop_id)">已领</div>
+              </div>
+            </div>
+
+            <div
+              class=" row_flex be_flex al_flex dis_bor"
+              v-for="g_item in item.productCoupon"
+            >
+              <div class="col_flex ar_flex al_flex dis_item_left ">
+                <img class="good_img" :src="g_item.good_img" alt="" />
+              </div>
+              <div class="col_flex ar_flex al_flex dis_item_mid">
+                <div class="good_name">{{ g_item.good_name }}</div>
+                <div class="goods_money">
+                  ￥ <span class="good_money">{{ g_item.coupon_amount }}</span>
+                  <span class=""
+                    >满{{ g_item.coupon_use_condition }}元使用</span
+                  >
+                </div>
+              </div>
+              <div class="col_flex ar_flex al_flex dis_item_right ">
+                <span class="goods_date"
+                  >{{ g_item.activity_end_time }} 过期</span
+                >
+                <span
+                  class="usering"
+                  @click="GoGoodDetail(g_item.product_id,g_item.shop_id)"
+                  >去使用</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-show="current == &quot;shop&quot;">
+          <div class="list  " v-for="item in total_arr">
+            <div v-if="item.shopCoupon.length > 0">
+              <div class="row_flex be_flex al_flex"  >
+                <div class="row_flex al_flex">
+                  <div><img class="shop_img" :src="item.shop_img" alt="" /></div>
+                  <div>{{ item.shop_name }}</div>
+                </div>
+                <!-- <div class="go_shop" @click='GoShop(item.shop_id)' >进店</div> -->
+              </div>
+              <div >
+                <div
+                  class="dis_item row_flex be_flex al_flex"
+                  v-for="s_item in item.shopCoupon"
+                >
+                  <div class="col_flex ar_flex al_flex dis_item_left ">
+                    <span>
+                      <i>￥</i>
+                      <span class="dis_item_money">{{
+                        s_item.coupon_amount
+                      }}</span>
+                    </span>
+                    <span>{{ s_item.status_name }}</span>
+                  </div>
+                  <div class="col_flex ar_flex al_flex dis_item_mid">
+                    <span v-if="s_item.coupon_use_condition"
+                      >满{{ s_item.coupon_use_condition }}使用</span
+                    >
+                    <span v-else>无门槛使用</span>
+                    <span class="dis_item_date"
+                      >{{ s_item.activity_end_time }} 过期</span
+                    >
+                  </div>
+                  <div class="col_flex ar_flex al_flex dis_item_right ">
+                    <div class="usering" @click="GoShop(s_item.shop_id)">
+                      已领
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-else>
+              <div @click="GoIndex" class="index">暂无店铺优惠券</div>
+            </div>
+          </div>
+        </div>
+        <div v-show="current == &quot;good&quot;">
+          <div class="list  " v-for="item in total_arr"  >
+            <div v-if='item.productCoupon.length > 0' >
+              <div class="row_flex be_flex al_flex "  >
+                <div class="row_flex al_flex">
+                  <div><img class="shop_img" :src="item.shop_img" alt="" /></div>
+                  <div>{{ item.shop_name }}</div>
+                </div>
+                <!-- <div class="go_shop" @click='GoShop(item.shop_id)' >进店</div> -->
+              </div>
+              <div
+                class=" row_flex be_flex al_flex dis_bor"
+                v-for="g_item in item.productCoupon"
+                
+                >
+                <div class="col_flex ar_flex al_flex dis_item_left ">
+                  <img class="good_img" :src="g_item.good_img" alt="" />
+                </div>
+                <div class="col_flex ar_flex al_flex dis_item_mid">
+                  <div class="good_name">{{ g_item.good_name }}</div>
+                  <div class="goods_money">
+                    ￥ <span class="good_money">{{ g_item.coupon_amount }}</span>
+                    <span class=""
+                      >满{{ g_item.coupon_use_condition }}元使用</span
+                    >
+                  </div>
+                </div>
+                <div class="col_flex ar_flex al_flex dis_item_right ">
+                  <span class="goods_date"
+                    >{{ g_item.activity_end_time }} 过期</span
+                  >
+                  <span
+                    class="usering"
+                    @click="GoGoodDetail(g_item.product_id,g_item.shop_id)"
+                    >去使用</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div v-else>
+              <!-- <div @click="GoIndex"  class="index">暂无商品1优惠券</div> -->
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- <div v-show="current == &quot;good&quot;">
+          <div class="list  " v-for="item in total_arr">                      
+            <div v-if='item.productCoupon > 0'>
+              <div
+                class=" row_flex be_flex al_flex dis_bor"
+                v-for="g_item in item.productCoupon"                
+                >
+                <div class="row_flex be_flex al_flex">
+                  <div class="row_flex al_flex">
+                    <div><img class="shop_img" :src="item.shop_img" alt="" /></div>
+                    <div>{{ item.shop_name }}</div>
+                  </div>
+                   <div class="go_shop" @click='GoShop(item.shop_id)' >进店</div>
+                </div>
+                <div class="col_flex ar_flex al_flex dis_item_left ">
+                  <img class="good_img" :src="g_item.good_img" alt="" />
+                </div>
+                <div class="col_flex ar_flex al_flex dis_item_mid">
+                  <div class="good_name">{{ g_item.good_name }}</div>
+                  <div class="goods_money">
+                    ￥ <span class="good_money">{{ g_item.coupon_amount }}</span>
+                    <span class=""
+                      >满{{ g_item.coupon_use_condition }}元使用</span
+                    >
+                  </div>
+                </div>
+                <div class="col_flex ar_flex al_flex dis_item_right ">
+                  <span class="goods_date"
+                    >{{ g_item.activity_end_time }} 过期</span
+                  >
+                  <span
+                    class="usering"
+                    @click="GoGoodDetail(g_item.product_id,g_item.shop_id)"
+                    >去使用</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div v-else>
+              <div @click="GoIndex"  class="index">暂无商品优惠券</div>
+            </div>
+          </div>
+        </div> -->
+        <div v-show="total_arr.length > 40" @click="GoMore" class="data_more">
+          加载更多
+        </div>
+      </div>
+      <div v-else><div @click="GoIndex" class="index">暂无</div></div>
+    </div>
+
+    <script src="./js/myDisCount.js"></script>
+  </body>
+</html>

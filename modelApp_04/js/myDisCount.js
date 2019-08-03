@@ -1,0 +1,200 @@
+var app = new Vue({
+  el: "#app",
+  data: {
+    buyer_id: "", // 用户编号
+    pageNum: 1, // 分页
+    pageSize: 50,
+    num: 10, // 加载更多的数量
+    current: "all", // 当前的tab切换
+    parm: {}, // 中转参数
+    total_arr: [] // 全部数据
+  },
+  created() {
+    var that = this;
+    this.buyer_id = pub._parm("user_id");
+    //  console.log(this.buyer_id);
+
+    var data = {
+      pageNum: this.pageNum,
+      pageSize: this.pageSize,
+      user_id: this.buyer_id
+    };
+
+    that.parm = data;
+    //  console.log(data);
+    pub._Init(
+      that,
+      pub.disCountUrl,
+      pub.detail_api.coupon_findUserCouponBag,
+      data,
+      that.BackData
+    );
+  },
+  methods: {
+    /**
+     * 函数回调 在返回的各种商品优惠券中做查询相应信息的操作
+     * 将 ajax 函数变成同步函数 async: false
+     */
+    BackData(res) {
+      //  console.log("我的卡包的回调函数", res);
+      var that = this;
+      // 查询店铺
+      var LookDept = function(that, _url, ur, _data, cbk) {
+        $.ajax({
+          type: "POST",
+          headers: {
+            token:localStorage.getItem('tk'),
+          },
+          contentType: "application/json",
+          url: _url + ur,
+          data: JSON.stringify(_data),
+          async: false, //同步
+          error: function(request) {
+            //  console.log("Connection error");
+          },
+          success: function(res) {
+            //  console.log(res);
+            if (res.stateCode == "200") {
+              var _obj = {
+                name: res.data[0].DeptInfo.dept_name,
+                img: res.data[0].DeptInfo.dept_img_url
+              };
+              cbk(_obj);
+            }
+          },
+          fail: function(r) {
+            //  console.log("Ajax的fail函数，", r);
+          }
+        });
+      };
+
+      // 查询商品
+      var LookGood = function(that, _url, ur, _data, cbk) {
+        $.ajax({
+          type: "POST",
+          headers: {
+            token:localStorage.getItem('tk'),
+          },
+          contentType: "application/json",
+          url: _url + ur,
+          data: JSON.stringify(_data),
+          async: false, //同步
+          error: function(request) {
+            alert("Connection error");
+          },
+          success: function(res) {
+            //  console.log(res);
+            if (res.stateCode == "200") {
+              for (var g = 0; g < res.data.length; g++) {
+                if (res.data[g].GoodsInfo) {
+                  // //  console.log(res.data[g].GoodsInfo)
+                  var _obj = {
+                    name: res.data[g].GoodsInfo.goods_name,
+                    img: res.data[g].GoodsInfo.goods_mini_img_url
+                  };
+                }
+
+                cbk(_obj);
+              }
+            }
+          },
+          fail: function(r) {
+            //  console.log("Ajax的fail函数，", r);
+          }
+        });
+      };
+      var flag = false;
+      if (res.code == "0") {
+        that.total_arr = res.data.list;
+        if (that.total_arr.length > 0) {
+          for (var x = 0; x < that.total_arr.length; x++) {
+            // 循环店铺信息
+            var data = {
+              dept_id: that.total_arr[x].shop_id
+            };
+            var shop_name = function(res) {
+              that.total_arr[x].shop_name = res.name;
+              that.total_arr[x].shop_img = res.img;
+            };
+            LookDept(that, pub.url, "findDept", data, shop_name);
+            // //  console.log(that.total_arr);
+            if (x == that.total_arr.length - 1) {
+              flag = true;
+            }
+          }
+
+          // 循环商品信息
+          if (flag) {
+            for (var gd = 0; gd < that.total_arr.length; gd++) {
+              if (that.total_arr[gd].productCoupon.length > 0) {
+                for (
+                  var gs = 0;
+                  gs < that.total_arr[gd].productCoupon.length;
+                  gs++
+                ) {
+                  var good_data = {
+                    dept_id: that.total_arr[gd].productCoupon[gs].shop_id,
+                    goods_id: that.total_arr[gd].productCoupon[gs].product_id
+                  };
+                  var good_name = function(res) {
+                    that.total_arr[gd].productCoupon[gs].good_name = res.name;
+                    that.total_arr[gd].productCoupon[gs].good_img = res.img;
+                  };
+                  LookGood(that, pub.url, "findGoods", good_data, good_name);
+                  // //  console.log(that.total_arr);
+                }
+              }
+            }
+          }
+        }
+        //  console.log(that.total_arr)
+      }
+      // this.pageSize = this.pageSize + 1
+      //
+    },
+
+    back() {
+      window.history.go(-1);
+    },
+
+    GoIndex() {
+      //window.location.href = "./index.html";
+    },
+
+    GoShop(parm) {
+      //  console.log("进店，店铺编号", parm);
+    },
+
+    GoGoodDetail(a, b) {
+      //  console.log("商品优惠券的使用", a, b);
+      window.location.href = "./GoodDetail.html?id=" + a + "&shop=" + b;
+    },
+
+    GoTab(parm) {
+      // //  console.log('切换优惠券类型',parm)
+      this.current = parm;
+      var that = this;
+      pub._Init(
+        that,
+        pub.disCountUrl,
+        pub.detail_api.coupon_findUserCouponBag,
+        this.parm,
+        that.BackData
+      );
+    },
+
+    GoMore() {
+      var that = this;
+      var data = that.parm;
+      data.pageSize = data.pageSize + that.num;
+
+      pub._Init(
+        that,
+        pub.disCountUrl,
+        pub.detail_api.coupon_findUserCouponBag,
+        data,
+        that.BackData
+      );
+    }
+  }
+});

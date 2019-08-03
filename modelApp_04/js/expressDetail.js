@@ -1,0 +1,118 @@
+var pub_url = pub.url;
+// 评价的接口
+var express_url = pub.express_url;
+var app = new Vue({
+  el: "#app",
+  data: {
+    product_id: "",
+    order_id: "",
+    detail: {},
+    mine: {},
+    pannel: false,
+    pan_str: ""
+  },
+  created() {
+    this.product_id = this._parm("product_id");
+    this.order_id = this._parm("order_id");
+    var data = {
+      product_id: this.product_id,
+      order_id: this.order_id
+    };
+    //  console.log(data);
+    var that = this;
+    // this.Init(that, express_url, "findProductEvaluation", data, that.BackInit);
+    pub._Init(that, pub.express_url,pub.detail_api.findProductEvaluation,data, that.BackInit)
+    this.mine = JSON.parse(localStorage.getItem("mine"));
+  },
+  methods: {
+    /**
+     * 列表的回调
+     */
+    BackInit(res) {
+      //  console.log(res);
+      if (res.stateCode == "200") {
+        // 第一次评价的照片
+        if (res.data.product_evaluation_picture) {
+          res.data.one_img_arr = res.data.product_evaluation_picture.split(",");
+        } else {
+          //  console.log("评价没有照片");
+        }
+
+        // 追评照片
+        if (res.data.product_evaluation_addition_picture) {
+          res.data.two_img_arr = res.data.product_evaluation_addition_picture.split(
+            ","
+          );
+        } else {
+          res.data.two_img_arr = res.data.product_evaluation_picture.split(",");
+        }
+
+        this.detail = res.data;
+      } else {
+        alert("请重新获取信息");
+      }
+    },
+
+    /**
+     * 请求函数
+     * @param {*} that this 指向
+     * @param {*} url  接口
+     * @param {*} data 参数
+     * @param {*} cbk 回调
+     */
+
+    Init(that, Url, url, data, cbk) {
+      $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: Url + url,
+        data: JSON.stringify(data),
+        error: function(request) {
+          //  console.log("Connection error");
+        },
+        success: function(res) {
+          cbk(res);
+        }
+      });
+    },
+
+    /**
+     * 获取参数
+     */
+    _parm(variable) {
+      //获取参数;
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) {
+          return pair[1];
+        }
+      }
+      return false;
+    },
+
+    /**
+     * 返回
+     */
+    back() {
+      window.history.go(-1);
+    },
+
+    /**
+     * 查看大图
+     */
+    GigImg(parm) {
+      this.pan_str = parm;
+      this.pannel = true;
+    },
+
+    /**
+     * 收起图片
+     */
+    Look() {
+      this.pannel = false;
+      this.pan_str = "";
+    }
+  }
+});

@@ -1,0 +1,79 @@
+[v-cloak] {
+  display: none !important;
+}
+*{
+  font-size: 0.14rem;
+  padding: 0px;
+  margin: 0px;
+  list-style: none; 
+}
+/* 搜索到商品后具体展示的商品信息 及商品首页中的商品列表 样式*/
+.showListPro{
+  margin:0 0.1rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: #f7f7f8 !important
+}
+.shopItem{
+  width: 49%;
+  margin-top: 0.08rem;
+}
+.textxx {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 0.14rem;
+  height: 0.35rem;
+  padding: 0.05rem;
+  width: 94%;
+  overflow:hidden;
+  background: #fff;
+  color: #1b1b1b;
+  line-height: 0.2rem;
+}
+.imgshop{
+  width: 100%;
+  height: 1.72rem;
+}
+.monery{
+  color: #ff0000 !important;
+  font-size: 0.2rem !important;
+  background: #fff;
+  color: #1b1b1b;
+  padding:0 0.05rem 0.05rem 0.05rem;  
+}
+.searchMore{
+  margin: 0.08rem 0.1rem 0rem 0.1rem;
+  text-align: center;
+  /* position: fixed;
+  bottom: 0px;
+  width: 94.6%; */
+}
+.searchMore button{
+  background: #fff;
+  width: 100%;
+  height: 0.4rem;
+  border: 0px;
+  cursor: pointer;
+  color: #7a7777;
+}
+ 
+/* 排序方式的样式 */
+.search_list_ul{
+  display: flex;
+  justify-content: space-around;
+  padding: 0.1rem 0 0.1rem 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.search_list_ul li{
+  flex-shrink: 0;
+  font-size: 0.16rem;
+}
+.search_list_ul li img{
+  vertical-align: middle;
+  margin-left: 0.05rem;
+  width: 0.16rem;
+  height: 0.16rem;
+}

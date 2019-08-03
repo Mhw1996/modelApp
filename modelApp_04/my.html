@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>个人信息主页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+  <script src="./js/pub.js"></script>
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <link rel="stylesheet" href="./layui/css/layui.mobile.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/my.css">
+  <style>
+      [v-cloak]{
+        display: none !important
+      }
+  </style>
+</head>
+
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+
+<body>
+
+  <div id="app">
+    <div class="po_nav">
+      <div @click='back()' class="po_back">
+        <img class='po_back_row' src='./imges/back1.png'>
+      </div>
+      <div>个人信息</div>
+      <div></div>
+    </div>
+    <!-- 内容 -->
+    <div v-cloak class='mine_container'>
+      <img v-if='person.customer_avater_url' v-on:click='pic(person.customer_id)' class='mine_pic' :src='person.customer_avater_url'>
+      <img v-else  class='mine_pic' v-on:click='pic(person.customer_id)' src="./imges/my_head.png" alt="">      
+    </div>
+    <div v-cloak class='user_work'>
+      <div @click='ChangeName(person.customer_id)' class='worker'>
+        <span>昵称</span>
+        <div class='worker_right'>
+          <span>{{person.customer_nickname}}</span>
+          <img class='row' src='./imges/right1.png'>
+        </div>
+      </div>
+      <div v-on:click='ChangePhone(person.customer_id)' class='worker'>
+        <span>我的手机号</span>
+        <div class='worker_right'>
+          <span>{{person.customer_tel}}</span>
+          <img class='row' src='./imges/right1.png'>
+        </div>
+      </div>
+      <div class='worker'>
+        <span>联系客服</span>
+      </div>
+      <div @click='GoLogin' class='worker'>
+        <span>退出登录</span>
+      </div>
+    </div>
+
+    <!-- app结尾 -->
+  </div>
+  <script src="./js/my.js"></script>
+  
+</body>
+
+</html>

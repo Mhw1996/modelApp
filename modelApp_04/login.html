@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>登录</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no"
+    />
+    <link rel="Shortcut Icon" href="./favicon.ico" />
+    <script src="./js/pub.js"></script>
+    <link rel="stylesheet" href="./layui/css/layui.mobile.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/loginTwo.css" />
+    <style>
+      body {
+        width: 100%;
+        height: 100vh;
+        font-size: 0.16rem;
+        background: -moz-linear-gradient(top, #ff9b5e, #e61e56);
+        background: -webkit-gradient(
+          linear,
+          0% 0%,
+          0% 100%,
+          from(#ff9b5e),
+          to(#e61e56)
+        );
+        background: -webkit-linear-gradient(top, #ff9b5e, #e61e56);
+        background: -o-linear-gradient(top, #ff9b5e, #e61e56);
+      }
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <script src="./js/jquery-1.12.4.js"></script>
+  <script src="./js/vue.js"></script>
+  <script src="./js/rem.js"></script>
+
+  <body>
+    <div id="app" v-cloak>
+      <div>
+        <div class="row_flex al_flex cen_flex">
+          <img class="img_logo" src="./imges/logo.png" alt="" />
+        </div>
+        <div class="nav_top  row_flex al_flex ar_flex">
+          <div
+            class="nav_top_child "
+            @click="Tab(&quot;lg&quot;)"
+            v-bind:class="tab == &quot;lg&quot; ? &quot;nav_top_act&quot; : &quot;&quot;"
+          >
+            登 录
+          </div>
+          <div
+            class="nav_top_child "
+            @click="Tab(&quot;rg&quot;)"
+            v-bind:class="tab == &quot;rg&quot; ? &quot;nav_top_act&quot; : &quot;&quot;"
+          >
+            注 册
+          </div>
+        </div>
+      </div>
+      <div>
+        <!-- 手机登录-->
+        <div v-show="tab == &quot;lg&quot; ">
+          <div v-show="show_ph">
+            <div class="work">
+              <div class="row_flex al_flex  worker_item work_bottom_line">
+                <div class="worker_child row_flex al_flex">
+                  <img class="work_img" src="./imges/phone.png" alt="" />
+                </div>
+                <div class="worker_child row_flex al_flex">
+                  <input
+                    @blur="_Phone"
+                    v-model="ph_num"
+                    class="worker_ipt"
+                    type="text"
+                    maxlength="11"
+                    placeholder="请输入手机号"
+                  />
+                </div>
+              </div>
+              <div class="row_flex al_flex  worker_item">
+                <div class="worker_child row_flex al_flex">
+                  <img class="work_img" src="./imges/password.png" alt="" />
+                </div>
+                <div class="worker_child row_flex al_flex">
+                  <input
+                    class="worker_ipt"
+                    v-model="pass"
+                    type="password"
+                    minlength="6"
+                    placeholder="请输入密码"
+                  />
+                </div>
+              </div>
+              <div class="worker_btn" @click="LoginIn">登 录</div>
+            </div>
+            <div class="change_msg" @click="Change">短 信 快 捷 登 录</div>
+          </div>
+
+          <!-- 短信登录 -->
+          <div v-show="show_msg">
+            <div class="work">
+              <div class="row_flex al_flex  worker_item work_bottom_line">
+                <div class="worker_child row_flex al_flex">
+                  <img class="work_img" src="./imges/phone.png" alt="" />
+                </div>
+                <div class="worker_child row_flex al_flex">
+                  <input
+                    @blur="_Phone"
+                    v-model="ph_num"
+                    class="worker_ipt"
+                    type="text"
+                    maxlength="11"
+                    placeholder="请输入手机号"
+                  />
+                </div>
+              </div>
+              <div class="row_flex al_flex  worker_item">
+                <div class="worker_child row_flex al_flex">
+                  <img class="work_img" src="./imges/msg.png" alt="" />
+                </div>
+                <div class="worker_child row_flex al_flex">
+                  <input
+                    class="worker_ipt"
+                    v-model="code"
+                    type="text"
+                    maxlength="6"
+                    minlength="6"
+                    placeholder="请输入验证码"
+                  />
+                  <div class="work_code" @click="SendCode">{{ msg_code }}</div>
+                </div>
+              </div>
+              <div class="worker_btn" @click="MsgLogin">登 录</div>
+            </div>
+            <div class="change_msg" @click="Change">账 号 密 码 登 录</div>
+           
+          </div>
+          
+        </div>
+        <!-- 注册 -->
+        <div class="work" v-show="tab == &quot;rg&quot;">
+          <div class="row_flex al_flex  worker_item work_bottom_line">
+            <div class="worker_child row_flex al_flex">
+              <img class="work_img" src="./imges/user.png" alt="" />
+            </div>
+            <div class="worker_child row_flex al_flex">
+              <input
+                v-model="nickname"
+                class="worker_ipt"
+                type="text"
+                maxlength="11"
+                placeholder="请输入昵称"
+              />
+            </div>
+          </div>
+          <div class="row_flex al_flex  worker_item work_bottom_line">
+            <div class="worker_child row_flex al_flex">
+              <img class="work_img" src="./imges/phone.png" alt="" />
+            </div>
+            <div class="worker_child row_flex al_flex">
+              <input
+                @blur="_Phone"
+                v-model="ph_num"
+                class="worker_ipt"
+                type="text"
+                maxlength="11"
+                placeholder="请输入手机号码"
+              />              
+            </div>
+          </div>
+          <div class="row_flex al_flex  worker_item work_bottom_line">
+            <div class="worker_child row_flex al_flex">
+              <img class="work_img" src="./imges/msg.png" alt="" />
+            </div>
+            <div class="worker_child row_flex al_flex">
+              <input
+                class="worker_ipt"
+                v-model="code"
+                type="text"
+                maxlength="6"
+                minlength="6"
+                placeholder="请输入验证码"
+              />
+              <div class="work_code" @click="SendCode">{{ msg_code }}</div>
+            </div>
+          </div>
+          <div class="row_flex al_flex  worker_item ">
+            <div class="worker_child row_flex al_flex">
+              <img class="work_img" src="./imges/password.png" alt="" />
+            </div>
+            <div class="worker_child row_flex al_flex">
+              <input
+                class="worker_ipt"
+                type="password"
+                v-model="pass"
+                minlength="6"
+                placeholder="请输入密码"
+              />
+              <!-- <div class='work_code' >{{msg_code}}</div> -->
+            </div>
+          </div>
+          <div class="worker_btn" @click="BecomeUser">立 即 注 册</div>
+        </div>
+      </div>
+      <div class='_no_user' v-show='fail_login' >
+       {{fail_login_msg}}
+      </div>
+    </div>
+
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script src="./js/jquery-1.12.4.js"></script>
+    <script src="./js/md5.js"></script>
+    <script src="./js/loginTwo.js"></script>
+  </body>
+</html>

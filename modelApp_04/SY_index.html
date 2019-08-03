@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>蚂蚁商城</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no"
+    />
+    <link rel="Shortcut Icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./swipter/css/swiper.min.css" />
+    <link rel="stylesheet" href="./layui/css/layui.mobile.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <script src="./js/rem.js"></script>
+  <script src="./js/pub.js"></script>
+
+  <body>
+    <!-- 搜索框的 -->
+    <nav> 
+      <div class="logo_info" >
+        <a href="">
+            <!-- <img class="logo_img" src="./imges/carselected.png" alt=""> -->
+        </a>
+        
+      </div>
+      <div class="nav_div">
+        <input type="text" class="nav_ipt" placeholder="输入商品" />
+        <img class="nav_sear" src="./imges/search.png" alt="" />
+      </div>
+    </nav>
+    <!-- Swiper -->
+    <div class="swiper-container mar_top">
+      <div class="swiper-wrapper banner_photo ">
+        <!--
+          <a href="" class="swiper-slide" target="blank">
+            <img class="banner_img" src="./imges/banner1.png" alt="">
+          </a>
+        -->
+      </div>
+      <!-- Add Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+    <!-- 一级分类 -->
+    <div class="classify">
+      <!--
+        <a href="http://www.baidu.com" class="classify_div" target="blank" >
+          <img class="classify_img" src="./imges/FeaturePack.png" alt="">
+          <span class="classify_span" >名称名称</span>
+        </a>
+      -->
+    </div>
+    <!-- 排行榜 推荐好物 -->
+    <div class="top_recommend">
+      <div class="top_left_box">
+        <a href="./top.html" class="top_list top_left_one " >
+          <!--
+            <span class='top_blue'  >排行榜</span>
+            <span class='top_text' >汇集全网最好的</span>
+            <div class='top_photo' >
+              <img class='top_list_img' src='./imges/160.png' >
+            </div>
+          -->
+        </a>
+      </div>
+
+      <div class="top_right_box">
+        <a href="./recommend.html" class="top_list top_left_two" >
+          <!-- <span class="top_orange">量身好物34</span>
+          <span class="top_text">量身推荐，发现品质生活</span>
+          <div class="top_photo">
+            <img class="top_list_img" src="./imges/160.png" />
+          </div> -->
+        </a>
+      </div>
+    </div>
+    <!-- 商品列表 -->
+    <div>
+      <div class="recomment_list">
+        <!-- <span class="line"> 精选好货 </span> -->
+        <span class="line"></span>
+      </div>
+      <div class="good_list_container goodlist">
+        <!--
+          <a  class='good_item' href=""    >
+            <img class='good_item_icon' src='./imges/100.png' >
+            <div class='good_item_infos' >
+              <span >名称</span>
+            </div>
+            <div class='good_item_info'>
+              <span class='name'>￥222</span>
+              <img class='shop_car' src='./imges/gooods-shop-cart.png' >
+            </div>
+          </a>
+        -->
+      </div>
+    </div>
+    <div class="place"></div>
+    <footer>
+      <a class="foot_div foot_div_one">
+        <img class="footer_img" src="./imges/home1.png" alt="" />
+        <span class="foot_span footer_red_color">首页</span>
+      </a>
+      <a class="foot_div foot_div_two" target="blank">
+        <img class="footer_img" src="./imges/classify0.png" alt="" />
+        <span class="foot_span">分类</span>
+      </a>
+      <a class="foot_div foot_div_three" target="blank">
+        <img class="footer_img" src="./imges/shop_cart0.png" alt="" />
+        <span class="foot_span">购物车</span>
+      </a>
+      <a class="foot_div foot_div_four" target="blank">
+        <img class="footer_img" src="./imges/my0.png" alt="" />
+        <span class="foot_span">我的</span>
+      </a>
+    </footer>
+
+    <script src="./js/jquery-1.12.4.js"></script>
+
+    <script src="./swipter/js/swiper.min.js"></script>
+
+    <script src="./js/index.js"></script>
+
+    <script src="./js/footer.js"></script>
+
+    <script>
+      function IsPC() {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = [
+          "Android",
+          "iPhone",
+          "SymbianOS",
+          "Windows Phone",
+          "iPad",
+          "iPod"
+        ];
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+          if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+          }
+        }
+        return flag;
+      }
+
+      
+    </script>
+  </body>
+</html>

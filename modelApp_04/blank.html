@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>全部评价</title>
+    <link rel="stylesheet" href="./swipter/css/swiper.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- <link rel="stylesheet" href="./css/productReview.css"> -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/mint-ui@1/lib/style.css"> -->
+    <!-- <link rel="stylesheet" href="./swipter/css/swiper.min.css"> -->
+    <link rel="stylesheet" href="./css/animate.css">
+    <style>
+      [v-cloak]{
+        display: none !important
+      }        
+      /* body {
+  background: #f5f5f5;
+} */
+.min_container {
+  padding-top: 1.1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+.tab_act {
+  color: #e61e56 !important;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.2rem 0 0.2rem;
+  align-items: center;
+  font-size: 0.2rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: #fff;
+}
+.back,
+.search_scan {
+  width: 0.36rem;
+  height: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+}
+.back_row {
+  width: 0.12rem;
+  height: 0.2rem;
+}
+/* 切换 */
+.review_classify {
+  font-size: 0.14rem;
+  color: #bcbcbc;
+  background-color: white;
+  margin-bottom: 0.1rem;
+  border-top: 0.01rem solid #f5f5f5;
+  padding-top: 0.05rem;
+  position: fixed;
+  top: 0.5rem;
+  width: 100%;
+  left: 0;
+  height: 0.55rem;
+}
+
+.product_review_head {
+  width: 0.36rem;
+  height: 0.36rem;
+  margin-right: 0.05rem;
+}
+.product_review_con {
+  margin: 0.2rem 0 0.1rem 0;
+  font-size: 0.16rem;
+}
+.review_con {
+  /* margin-bottom: 0.1rem; */
+}
+.review_time {
+  color: #bcbcbc;
+  font-size: 0.12rem;
+  padding: 0 0 0.05rem 0rem;
+}
+.first_review {
+  color: #333;
+  font-size: 0.12rem;
+  padding: 0 0 0.05rem 0rem;
+  /* margin-bottom: 0.1rem; */
+}
+.review_img {
+  width: 0.9rem;
+  height: 0.9rem;
+  margin: 0.05rem 0.05rem;
+}
+.review_img img {
+  width: 100%;
+  height: 100%;
+}
+.bg_white {
+  background-color: white;
+  padding: 0 0.25rem;
+  padding-bottom: 0.25rem;
+  border-top: 0.01rem solid #f5f5f5;
+  border-bottom: 0.01rem solid #f5f5f5;
+}
+.first_answer {
+  width: 100%;
+  padding: 0.1rem 0.25rem;
+  background-color: #ececee;
+  /* margin-top: 0.15rem; */
+}
+.first_answer_lan {
+  font-size: 0.14rem;
+  color: #333;
+  margin-bottom: 0.05rem;
+  font-weight: bold;
+}
+.user_review {
+  font-size: 0.16rem;
+  padding: 0 0 0.05rem 0rem;
+  color: #e61e56;
+  margin-top: 0.15rem;
+}
+.pic_box {
+  margin: 0.05rem 0;
+}
+.go_more {
+  width: 100%;
+  height: 0.5rem;
+  background-color: #f5f5f5;
+  color: #bcbcbc;
+  font-size: 0.12rem;
+  text-align: center;
+  line-height: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+
+    </style>
+  </head>
+  <script src="./js/pub.js"></script>
+  <script src="./js/jquery-1.12.4.js"></script>
+  <script src="./js/vue.js"></script>
+  <script src="./js/rem.js"></script>
+  <body>
+     
+    <div id="app" v-cloak>
+      <div class="min_container"  @scroll="scrollEvent" > 
+        <!-- <nav>
+          <div @click='back' class="back">
+            <img class='back_row' src='./imges/back1.png'>
+          </div>
+          <div>全部评论</div>
+          <div class="search_scan"></div>
+        </nav> -->
+        <h6 class="animated   ">Example</h6>
+        <h5  >hahha</h5>
+        <div class='col_flex ' >
+          <div class='row_flex ar_flex al_flex review_classify ' >
+            <div class='col_flex al_flex '  @click='GoTab("all")' v-bind:class='tab_id == "all" ? "tab_act" : "" ' >
+              <p>全部</p>
+              <p>{{evaluation_count}}</p>
+            </div>
+            <div class='col_flex al_flex ' @click='GoTab("nice")' v-bind:class='tab_id == "nice" ? "tab_act" : "" '>
+              <p>好评</p>
+              <p>{{evaluation_count_obj.nice}}</p>
+            </div>
+            <div class='col_flex al_flex ' @click='GoTab("common")' v-bind:class='tab_id == "common" ? "tab_act" : "" '>
+              <p>中评</p>
+              <p>{{evaluation_count_obj.common}}</p>
+            </div>
+            <div class='col_flex al_flex ' @click='GoTab("bed")' v-bind:class='tab_id == "bed" ? "tab_act" : "" '>
+              <p>差评</p>
+              <p>{{evaluation_count_obj.bad}}</p>
+            </div>
+          </div>
+          <div class='bg_white'v-for='(item,idx) in evaluation_arr'  >
+            <div >
+              <div class='col_flex review_con' >
+                <div class='row_flex al_flex  product_review_con' >
+                  <img class='product_review_head' src="./imges/my_head.png" alt="">
+                  <span>{{item.product_evaluation_userName}}</span>
+                </div>
+                <div class='review_time' >{{item.add_time}}</div>
+                <div class='first_review' >
+                  {{item.product_evaluation_description}}
+                </div>
+              </div>
+              <div class='row_flex wr_flex pic_box ' >
+                <div class='review_img img_flex' v-for='(pic_item,idx) in item.product_evaluation_picture' :key='idx' >
+                  <img :src="pic_item" alt="">
+                </div>
+                
+              </div>
+              <div class='first_answer' v-show='item.product_evaluation_reply ' >
+                <div class='first_answer_lan' >客服回复：</div>
+                <div class='first_review' >
+                  {{item.product_evaluation_reply}}
+                </div>
+              </div>
+              <div class='user_review'  v-show='item.product_evaluation_addition_description' >用户追评</div>
+              <div class='first_review' v-show='item.product_evaluation_addition_description' >
+               {{item.product_evaluation_addition_description}}
+              </div>
+              <div class='row_flex wr_flex pic_box' >
+                <div class='review_img img_flex' v-for='(add_item,idx) in item.product_evaluation_addition_picture' >
+                  <img :src="add_item" alt="">
+                </div>
+                
+              </div>
+              <div class='first_answer' v-show='item.product_evaluation_addition_reply' >
+                <div class='first_answer_lan' >客服回复：</div>
+                <div class='first_review' >
+                 {{item.product_evaluation_addition_reply}}
+                </div>
+              </div>
+            </div>
+            
+          </div>   
+          <div class='go_more' v-if='more_show'  @click='GoMore' >加载更多</div>      
+          <div class='go_more' v-else>没有更多评价了</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 引入js -->
+    <script src="./js/bk.js"></script>
+    <script>
+    $('h5').on('click',function(){
+      $('h6').addClass('lightSpeedIn')
+      setTimeout(function(){
+        $('h6').removeClass('lightSpeedIn')
+      },1000)
+    })
+    </script>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>我的评价</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/express.css">
+  <style>
+      [v-cloak]{
+        display: none !important
+      }      
+  </style>
+</head>
+<script src="./js/base.js"></script>
+<script src="./js/pub.js"></script>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+</head>
+<body>
+    <div id="app" v-cloak> 
+      <div>
+        <div class="po_nav">
+          <div @click='back()' class="po_back">
+            <img class='po_back_row' src='./imges/back1.png'>
+          </div>
+          <div class='midd' >我的评价</div>
+          <div></div>
+        </div>
+        <div>
+          <!-- <div class='express_tit row_flex al_flex ar_flex' >
+            <div>已评价</div>
+            <div>未评价</div>
+          </div> -->
+          <div class='col_flex ' v-if='express_arr.length > 0' > 
+            <div class='express_block' v-for='item in express_arr' >
+              <div class='exppress_time row_flex be_flex' >
+                <div>{{item.add_time}}</div>
+                <div>{{item.product_evaluation_stateName}}</div>
+                </div>
+                <div class='exppress_title' >{{item.product_name}}</div>
+              <div class='exppress_con' >
+                <div></div>
+                {{item.product_evaluation_description}}
+              </div>
+              <div class='row_flex pnotos'  >
+                <div class='exppress_photos img_flex' v-for='it in item.imgs' >
+                  <img class='express_imgs' :src="it" alt="">
+                </div>
+              </div>
+              <div class=' express_good row_flex al_flex ' >
+                  
+                <div class='express_text col_flex ' >
+                  
+
+                  <div class='row_flex al_flex be_flex flex_block' >
+
+                    <!-- <div class='goexpress' @click='GoExpress(item.product_id,item.dept_id,item.order_id,item.product_name)' v-if='item.product_evaluation_stateId == "evaluate"' >去追评</div>
+                    <div class='goexpress' @click='GoExpress(item.product_id,item.dept_id,item.order_id,item.product_name)' v-if='item.product_evaluation_stateId == "reply_evaluation"' >去追评</div>
+                    <div class='goexpress' @click='GoExpressDetail(item.product_id,item.order_id)' v-if='item.product_evaluation_stateId == "reply_additional_evaluation"' >已追评</div>
+                    <div class='goexpress' @click='GoExpressDetail(item.product_id,item.order_id)' v-if='item.product_evaluation_stateId == "additional_evaluation"' >已追评</div> -->
+
+                    
+                    <div class='goexpress' @click='GoExpress(item.product_id,item.dept_id,item.order_id,item.product_name)' v-if='item.product_evaluation_stateId == "reply_evaluation"' >追评</div>
+                    <div class='goexpress' @click='GoExpressDetail(item.product_id,item.order_id)' v-else >查看</div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div v-else class='no' >
+            暂无评价
+          </div>
+          <div v-show='express_arr.length > 120' class='no' @click='GoMore' >
+            加载更多
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <script src="./js/express.js"></script>
+</body>
+</html>

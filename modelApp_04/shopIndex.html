@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>shopindex</title>
+	<link rel="stylesheet" href="./css/vant.css">
+	<link rel="stylesheet" href="./css/shopIndex.css"> 
+	<link rel="stylesheet" href="./css/public.css">
+</head>
+<body>
+	<div id="app_index" v-cloak>	
+		<header>
+			<img :src="bgimg" alt="" class="bgimg"  onerror="this.src='./imges/160.png'">
+			<div class="mymaskposition">
+				<div class="myheader">
+					<img src="./imges/myback.png" alt="" class="back" @click="jumptest" >
+					<input type="text" class="search" placeholder="搜索好物" readonly @click="jumpsearch"> 
+					<div class="station"></div>					
+				</div>
+				<div class="imglogobox">
+					<img :src="shopLogo" alt="" class="shoplogo">
+					<span>{{shopName}}</span>					
+				</div>	
+				<div class="myTabs">
+					<ul class="libox">
+						<!-- 头部导航栏 -->
+						<li v-for="(item,index) of navLists" key="itme.id"> 
+							<span :class="{TabMarks:item.navigation_id==navigation_id}" 
+							@click="cutTabs(item.navigation_order,index,item.navigation_id)" >
+								{{item.navigation_name}}
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<!-- home下的商品 -->
+		<div class="boxmyhome" v-if="'N201906171444001'==navigation_id">	
+		<!--轮播图 -->
+			<div class="swiper">
+				<van-swipe :autoplay="3000" indicator-color="white">
+					<van-swipe-item v-for="(image, index) in imageSwipe" :key="index" width="100%"  @click="jumpLink(image.img_target,image.img_order)">
+						<img  :src="image.img_path" class="myimgbanner"  onerror="this.src='./imges/160.png'"/>
+					</van-swipe-item>		
+				</van-swipe>
+			</div>
+			<!-- 分类模块 -->
+			<div class="mytypes" v-for="item of bannerList">
+				<!-- 横幅加分类 -->
+				<div  v-if="item.column_type=='type_list'">
+					<div class="hf">
+						<img :src="item.column_img" alt="">
+					</div>
+					<div class="kispa">
+						<ul>
+							<li class="mylidis" v-for="itemText of item.product" @click="typefun(itemText.img_target)"> 
+								<div class="fonttext">
+									<span>{{itemText.img_name}}</span>	<br>
+									<span class="eng">{{itemText.img_des}}</span>
+								</div>
+								<img :src="itemText.img_path" alt=""  >
+							</li>
+						</ul>
+					</div>
+				</div>	
+				<!-- 横幅加四张图片 -->
+				<div class="typeFour" v-if="item.column_type=='four_list'">
+				
+					<div class="hf">
+						<img :src="item.column_img" alt="">
+					</div>
+					<ul class="img_url">
+							<li v-for="myimgitem of item.product" @click="fourFun(myimgitem.img_target)">
+								<img :src="myimgitem.img_path" alt=""  onerror="this.src='./imges/160.png'">
+							</li>
+					</ul>
+				</div>
+				<!-- 横幅加9图片 -->
+				<div class="hotSale" v-if="item.column_type=='nine_list'">
+					<div class="hf">
+						<img :src="item.column_img" alt="">
+					</div>
+					<div class="nenge">
+						<ul>
+							<li v-for="imgitemnine of item.product" @click="nineFun(imgitemnine.img_target)"> 
+								<img :src="imgitemnine.img_path" alt="" class="imgnine"  onerror="this.src='./imges/160.png'">
+							</li>
+						</ul>
+					</div>	
+				</div>
+			</div>
+			<!--商品列表文字加图片，店长推荐 横幅 -->
+			<div class="onlyshoplist">
+				<!-- <div class="piiic">
+					<img src="./imges/new_piiic.png" alt="">
+				</div>	 -->
+				<!--店长推荐 -->
+				<div class="Shopowner" >
+						<!-- <h2> <i>店长推荐</i> </h2> -->
+						<!-- <div class="hf">
+							<img src="./imges/hotsale.png" alt="">
+						</div> -->
+						<!-- 店长推荐下的具体商品内容 -->
+						<div class="info">
+							<div class="showListPro">
+								<div class="shopItem" v-for="itemList of getMoreList" @click="jumpShopInfo(itemList.goods_id)">
+									<img :src="itemList.goods_mini_img_url" alt="" class="imgshop"  onerror="this.src='./imges/160.png'">
+									<div style="margin-top: -0.04rem;">
+										<div class="textxx">{{itemList.goods_name}}</div>
+										<p class="monery" style="text-align: left !important;padding-left: 0.05rem;">￥{{itemList.sale_price?itemList.sale_price:'0'}}
+										<span style="font-size: 0.080rem !important;color: #9c9a9a;">已售{{itemList.sale_count?itemList.sale_count:"0"}}件</span> 
+											<!-- <span style="color: rgb(255, 22, 22);font-size:0.14rem">.90</span> -->
+										</p> 
+									</div>         
+								</div>
+								</div>
+								<div class="searchMore"> 
+									<button @click="getShopList">加载更多热门商品</button>
+								</div>
+						</div> 
+				</div>
+			</div>
+		</div>
+		<!--商品-->
+		<div class="shoplist" v-show="'N201906171444002'==navigation_id">	
+		<!-- 商品顶部的排序方式 -->
+		<div class="searchcontent">
+			<ul class="search_list_ul">
+				<li :class="allshow?'isColor':''" @click="mydefault">默认</li>
+				<li  @click='salenum'>
+					<span :class="saleShow?'isColor':''">销量</span>
+					<img src="./imges/toptip.png" alt="" v-if="showId">
+					<img src="./imges/bottomtip.png" alt="" v-else>   
+				</li>
+				<li @click="newProFun">
+					<span :class="newShow?'isColor':''">上新</span>
+					<img src="./imges/toptip.png" alt="" v-if="newProId">
+					<img src="./imges/bottomtip.png" alt="" v-else>   
+				</li>
+				<li @click="priceFun" >
+					<span :class="priceShow?'isColor':''">价格</span>
+					<img src="./imges/toptip.png" alt="" v-if="PriceId">
+					<img src="./imges/bottomtip.png" alt="" v-else>   
+				</li>
+			</ul>
+		</div>
+	<!-- 具体的商品信息列表 -->
+			<div class="showListPro" >
+				<div class="shopItem" v-for="itemList of shoplist" @click="jumpShopInfo(itemList.goods_id)">
+					<img :src="itemList.goods_mini_img_url" alt="" class="imgshop"  onerror="this.src='./imges/160.png'">
+					<div style="margin-top: -0.04rem;">
+						<div class="textxx">{{itemList.goods_name}}</div>
+						<p class="monery" style="text-align: left !important;padding-left: 0.05rem;padding:0.05rem;color:#ff0000 !important">￥{{itemList.sale_price?itemList.sale_price:'0'}}
+							<span style="font-size: 0.080rem !important;color: #9c9a9a;">已售{{itemList.sale_count?itemList.sale_count:"0"}}件</span>  
+						</p> 
+					</div>         
+				</div>
+				</div>	
+			<div class="searchMore"> 
+				<button @click="shoplistmore">加载更多热门商品</button>
+			</div>
+		</div>
+		<!-- s上新-->
+		<div class="shopBox" v-show="'N201906171444003'==navigation_id" >
+			<div v-for="itemNewList of newProList">
+				<p class="myclockBox">
+					<span class="clockLine"></span>
+					<span class="clockspot"></span>
+				 	<img src="./imges/clock.png" alt="" class="clock">	
+				 	{{itemNewList.date}}
+					<span class="myclockspot"  ></span>					
+					<span class="clockLine" ></span>					
+				</p>
+				<div class="showListPro" >
+					<div class="shopItem" v-for="itemList of itemNewList.productList" @click="jumpShopInfo(itemList.product_id)">
+						<img :src="itemList.goods_mini_img_url" alt="" class="imgshop"  onerror="this.src='./imges/160.png'">
+						<div style="margin-top: -0.04rem;">
+							<div class="textxx">{{itemList.goods_name}}</div>
+							<p class="monery" style="text-align: left !important;padding-left: 0.05rem;padding:0.05rem;color:#e61e56 !important">￥{{itemList.sale_price?itemList.sale_price:'0'}}
+							</p> 
+						</div>         
+					</div>
+					</div>	
+			</div>	
+			<div class="searchMore"> 
+				<button @click="getnewPro">加载更多热门商品</button>
+			</div>
+		</div>
+		<!-- 回滚到顶部 -->
+		<div class="TopArrow">
+			<img src="./imges/TopArrow.png" alt="" class="imgTop" @click="backTop">
+		</div>
+</div>
+</body>
+	<script src="./js/vue.min.js"></script>
+	<script src="./js/jquery-1.12.4.js"></script>
+	<script src="./js/vant.min.js"></script>
+	<script src="./js/rem.js"></script>
+	<script src="./js/pub_shopindex.js"></script>	
+	<script src="./js/shopIndex.js"></script>
+	<script>
+		var Vue = window.Vue;
+		var vant = window.vant;
+		Vue.use(vant);
+	</script>
+	 <script>
+	(window.onload=function(){
+		var win = window.document
+		win.addEventListener('scroll',function(){
+			var top = document.documentElement.scrollTop || document.body.scrollTop;
+			// console.log(top)
+			var myTopTabs=document.getElementsByClassName('myTabs')[0]
+			var myTopArrow=document.getElementsByClassName('TopArrow')[0]
+			var searchcontent=document.getElementsByClassName('searchcontent')[0]
+			if(top>=143){
+				myTopTabs.classList.add('myTabsChange')
+				myTopArrow.classList.add('TopArrowchange')
+				// searchcontent.classList.add('searchcontentChange')
+			}else{
+				myTopTabs.classList.remove('myTabsChange')
+				myTopArrow.classList.remove('TopArrowchange')
+				// searchcontent.classList.remove('searchcontentChange')
+			}
+			// 为排序方式导航栏目添加吸顶
+			if(top>154){
+				searchcontent.classList.add('searchcontentChange')
+			}else{
+				searchcontent.classList.remove('searchcontentChange')
+			}
+
+		})
+	})()
+	 </script>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/vant.css">
+  <link rel="stylesheet" href="./css/Shopindex_Search.css">
+  <link rel="stylesheet" href="./css/public.css">
+</head>
+<body>
+  <div id="shopSearch" v-cloak>
+    <header>
+      <div class="myheader">
+        <img src="./imges/back_black.png" alt="" class="back" @click='jumpShopIndex'> 
+        <input type="search" class="search" placeholder="搜索好物" autofocus v-model="productName"> 
+        <span style="color: #aaa;font-size: 0.16rem" @click="searchfun">搜索</span>
+      </div>
+      <!-- 商品搜索的方式 -->
+      <div class="searchcontent">
+        <ul class="search_list_ul">
+          <li :class="allshow?'isColor':''" @click="all">默认</li>
+          <li @click="saleShowNum">
+            <span :class="saleShow?'isColor':''">销量</span>
+            <img src="./imges/toptip.png" alt="" v-if="showId">
+            <img src="./imges/bottomtip.png" alt="" v-else>   
+          </li>
+          <li @click="newProShow">
+            <span :class="newShow?'isColor':''">上新</span>
+            <img src="./imges/toptip.png" alt="" v-if="newProId">
+            <img src="./imges/bottomtip.png" alt="" v-else>   
+          </li>
+          <li @click="PriceShowFun">
+            <span :class="priceShow?'isColor':''">价格</span>
+            <img src="./imges/toptip.png" alt="" v-if="PriceId">
+            <img src="./imges/bottomtip.png" alt="" v-else>   
+          </li>
+        </ul>
+      </div>
+    </header>
+    <!-- 搜索的具体商品信息，如果有商品则显示商品，如果没有商品则显示暂无商品的提示 -->
+    <div class="search_pro">
+      <div style="width: 100% ;height: 0.9rem;"></div>
+      <div class="noShopPro" v-if="shoplist.length=='0'">
+        <!-- 暂无商品 -->
+        <img src="./imges/NoSearch.png" alt="">
+        <p class="NoSearchTiptext">抱歉，没有发现相关内容</p>
+        <p style="color: #8d8d8d;font-size: 0.18rem">换个关键词试试吧</p>
+      </div>
+      <!-- 具体商品列表信息 -->
+      <div  v-else>
+        <div class="showListPro">
+          <div class="shopItem" v-for="item of shoplist" @click="jumpShopInfo(item.goods_id)">
+            <img :src="item.goods_mini_img_url" alt="" class="imgshop">
+            <div style="margin-top: -0.04rem;">
+              <div class="textxx">{{item.goods_name}}</div>
+              <p class="monery" >￥{{item.sale_price?item.sale_price:'0'}}
+                <span style="font-size: 0.080rem !important;color: #9c9a9a;">已售{{item.sale_count?item.sale_count:"0"}}件</span>  
+              </p> 
+            </div>         
+          </div>
+         </div>
+         <!-- <div style="height: 0.45rem;"></div> -->
+         <div class="searchMore"> 
+           <button @click="getMore">查询更多热门商品</button>
+         </div>
+      </div> 
+    </div>
+ 
+  </div>
+</body>
+  <script src="./js/vue.min.js"></script>
+  <script src="./js/jquery-1.12.4.js"></script>
+  <script src="./js/vant.min.js"></script>
+  <script src="./js/rem.js"></script> 
+  <script src="./js/pub_shopindex.js"></script>
+  <script src="./js/ShopSearch.js"></script>
+  <script>
+    var Vue = window.Vue;
+    var vant = window.vant;
+    Vue.use(vant);
+  </script>
+</html>

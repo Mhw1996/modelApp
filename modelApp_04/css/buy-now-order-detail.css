@@ -1,0 +1,409 @@
+body {
+  background-color: #f5f5f5;
+}
+#app {
+  padding-top: 0.6rem;
+}
+.po_nav {
+  padding: 0 0.2rem 0 0.2rem;
+
+  font-size: 0.18rem;
+  background-color: #fff;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.po_back {
+  width: 0.22rem;
+  height: 0.22rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.po_back_row {
+  width: 0.15rem;
+  height: 0.15rem;
+}
+
+.order_staus {
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #e61e56;
+  justify-content: flex-start;
+  padding-left: 0.15rem;
+  color: #fff;
+  font-size: 0.16rem;
+  margin-bottom: 0.1rem;
+}
+.order_top {
+  display: flex;
+  align-items: center;
+}
+.order_icon {
+  width: 0.15rem;
+  height: 0.18rem;
+  display: inline-block;
+  margin-right: 0.15rem;
+}
+
+.order_mid {
+  padding-left: 0.28rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.info {
+  margin-right: 0.1rem;
+  font-size: 0.12rem;
+}
+
+.order_address {
+  min-height: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  justify-content: space-around;
+  padding-left: 0.15rem;
+  font-size: 0.12rem;
+  margin-bottom: 0.1rem;
+  width: 85%;
+  padding-top: 0.05rem;
+}
+
+.order_info {
+  padding: 0.15rem 0 0 0;
+  background-color: #fff;
+  margin-bottom: 0.05rem;
+}
+
+.address_icon {
+  width: 0.15rem;
+  height: 0.15rem;
+  margin-right: 0.1rem;
+  margin-left: 0.15rem;
+}
+
+.order_list {
+  padding: 0.15rem 0.15rem;
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.16rem;
+  border-bottom: 0.01rem solid #f5f5f5;
+}
+
+.order_list_left {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.order_list_left_img {
+  width: 100%;
+  height: 100%;
+}
+
+.order_list_mid {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 0.1rem;
+  font-size: 0.12rem;
+}
+
+.order_list_mid_text {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.order_list_right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: right;
+  width: 20%;
+  font-size: 0.12rem;
+}
+
+.text {
+  width: 100%;
+  text-align: right;
+  display: inline-block;
+}
+
+.connect {
+  width: 100%;
+  height: 0.25rem;
+  border: solid 0.01rem #e2dfdf;
+  border-radius: 0.25rem;
+  line-height: 0.25rem;
+  text-align: center;
+  color: #6d6d6d;
+  font-size: 0.12rem;
+}
+
+.money_list {
+  background-color: #fff;
+  margin-top: 0.1rem;
+  padding: 0 0.15rem;
+  color: #424242;
+  font-size: 0.16rem;
+}
+
+.money_item {
+  height: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.place {
+  height: 0.6rem;
+}
+.blank {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 0.5rem;
+  align-items: center;
+}
+
+.connect_btn_cancel {
+  border-right: solid 0.01rem #e2dfdf;
+  color: #6d6d6d;
+  height: 100%;
+  width: 70%;
+  line-height: 0.5rem;
+  text-align: right;
+  font-size: 0.12rem;
+  padding-right: 0.1rem;
+}
+
+.connect_btn_right {
+  background-color: #e61e56;
+  color: #fff;
+  height: 100%;
+  width: 30%;
+  line-height: 0.5rem;
+  text-align: center;
+  font-size: 0.12rem;
+}
+
+.row {
+  width: 0.15rem;
+  height: 0.15rem;
+  margin-left: 0.15rem;
+}
+
+.select_addr {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  margin-bottom: 0.1rem;
+}
+
+.addr_row {
+  width: 0.68rem;
+  /* height:0.5rem; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addr_icon {
+  width: 0.1rem;
+  height: 0.1rem;
+}
+
+.shop_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding-right: 0.3rem; */
+}
+
+.bggray {
+  background-color: #626775 !important;
+}
+
+.buyer_write {
+  font-size: 0.12rem;
+  padding-left: 0.15rem;
+  height: 0.5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.buy_input {
+  height: 0.5rem;
+  width: 65%;
+  border: none;
+  font-size: 0.12rem;
+}
+
+/* 优惠券 */
+.userd {
+  font-size: 0.16rem;
+  height: 0.5rem;
+  padding: 0.1rem;
+  color: #333;
+  background-color: white;
+}
+
+/* 优惠券的弹框 */
+.dis_pannel {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 50%;
+  background-color: white;
+  z-index: 999999;
+  /* overflow-y: auto */
+}
+.dis_use {
+  height: 0.1rem;
+  padding: 0.2rem;
+  font-size: 0.14rem;
+  justify-content: space-between;
+  border-bottom: 0.01rem solid #f4f4f4;
+  color: #666;
+}
+.dis_close {
+  width: 0.15rem;
+  height: 0.15rem;
+}
+.dis_list {
+  padding: 0 0.1rem;
+}
+.dis_item {
+  height: 0.8rem;
+  font-size: 0.14rem;
+  background-image: url("../imges/dis-nouse.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin: 0.1rem 0.05rem;
+  color: #ca224f;
+}
+.dis_item_left {
+  width: 25%;
+}
+.dis_item_mid {
+  width: 50%;
+}
+.dis_item_right {
+  width: 25%;
+}
+.dis_item_date {
+  width: 55%;
+  color: #424242;
+  font-size: 0.14rem;
+}
+.dis_item_money {
+  font-size: 0.3rem;
+}
+.go_user {
+  padding: 0.05rem 0.1rem;
+  border-radius: 0.18rem;
+  background-color: #ca224f;
+  color: white;
+  font-size: 0.12rem;
+}
+.go_userd_bg {
+  background-image: url("../imges/dis-used.png");
+}
+.go_userd {
+  padding: 0.05rem 0.1rem;
+  border-radius: 0.18rem;
+  border: 0.01rem solid #ca224f;
+  color: #ca224f;
+  font-size: 0.12rem;
+}
+.coupon_pannel_list {
+  height: 95%;
+  overflow-y: auto;
+  padding-bottom: 0.25rem;
+}
+.pay_money {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  font-size: 0.14rem;
+
+  width: 100%;
+  height: 0.5rem;
+  background-color: white;
+}
+.paied {
+  height: 100%;
+  width: 25%;
+  background-color: #e61e56;
+  color: white;
+  line-height: 0.5rem;
+  text-align: center;
+}
+.real_money {
+  width: 73%;
+  height: 100%;
+  line-height: 0.5rem;
+  margin-left: 0.15rem;
+}
+.money_pannel {
+  height: 0.6rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 0.12rem;
+  width: 100%;
+  background: white;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 0.15rem;
+  display: flex;
+  justify-content: space-around;
+}
+.w45 {
+  width: 45%;
+  margin-right: 0.15rem;
+}
+.dis_select {
+  width: 0.2rem;
+}
+
+.connect_btn_cancel {
+  border: solid 0.01rem #e2dfdf;
+  color: #6d6d6d;
+  height: 0.3rem;
+  width: 1rem;
+  border-radius: 0.4rem;
+  line-height: 0.3rem;
+  text-align: center;
+  margin-right: 0.15rem;
+  font-size: 0.12rem;
+}
+
+.connect_btn_right {
+  background-color: #e61e56;
+  color: #fff;
+  height: 0.3rem;
+  width: 1rem;
+  border-radius: 0.25rem;
+  line-height: 0.3rem;
+  text-align: center;
+  font-size: 0.12rem;
+}
+._real_money {
+  font-size: 0.14rem;
+}

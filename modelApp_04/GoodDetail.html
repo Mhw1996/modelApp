@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="Shortcut Icon" href="./favicon.ico" />
+  <title>商品详情</title>
+  <link rel="stylesheet" href="./swipter/css/swiper.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/GoodDetail.css">
+  <link rel="stylesheet" href="./css/animate.css">
+  <!-- <link rel="stylesheet" href="https://unpkg.com/mint-ui@1/lib/style.css"> -->
+  <style>
+      [v-cloak]{
+        display: none !important
+      }
+      .car_num {
+        position: absolute;
+        top: 0rem;
+        left: 54%;
+        display: block;
+        color: white;
+        font-size: 0.14rem;
+        background: #e61e56;
+        border-radius: 50%;
+        width: 0.2rem;
+        height: 0.2rem;
+        text-align: center;
+        line-height: 0.2rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        
+      }
+      .car_success{
+        width: 0.8rem;
+        background: rgba(0,0,0,.6);
+        position: absolute;
+        top: -0.35rem;
+        left: 0.15rem;
+        height: 0.3rem;
+        border-radius: 0.05rem;
+        line-height: 0.3rem;
+        text-align: center;
+        display: none;
+        color: white;
+      }
+    </style>
+
+</head>
+<script src="./js/pub.js"></script>
+<script src="./js/jquery-1.12.4.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/rem.js"></script>
+<!-- <script src="https://unpkg.com/mint-ui@1/lib/index.js"></script> -->
+<body>
+  <div id="app" v-cloak >
+    <nav>
+      <div @click='back' class="back">
+        <img class='back_row' src='./imges/back1.png'>
+      </div>
+      <div>商品详情</div>
+      <div class="search_scan">
+
+      </div>
+    </nav>
+    <!-- 轮播图 -->
+    <div   class="_div">
+        <!-- <img class="banner_img" :src="GoodsInfo.goods_mini_img_url" alt=""> -->
+      <div class="swiper-container">
+        <div class="swiper-wrapper banner_photo ">
+          <div v-for="item in img" class="swiper-slide" >
+            <img class="banner_img" :src="item.goods_img_url" alt="">
+          </div>
+        </div>
+       
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+    <!-- 具体介绍 -->
+    <div  >
+      <div class='info' >
+        <div class='info_left'>
+          <div class='info_left_name'>{{GoodsInfo.goods_name}}</div>
+          <div>
+            <span class='price'>￥{{GoodsSole.sale_price}}元/{{GoodsInfo.unit}}</span>     
+            <span class='line_price'>￥原价{{GoodsSole.show_price}}元/{{GoodsInfo.unit}}</span>
+          </div>
+        </div>
+        <!-- <div @click='AddShopCar(GoodsSole.goods_id)' class="add_info" >
+          <div  class='info_right'>
+            <img class='info_ri_img' src='./imges/add.png'>
+            <span>添加购物车</span>
+          </div>
+        </div> -->
+        
+      </div>
+    </div>
+    <div class='dis_count row_flex' v-show='show_coupon' >
+      <div>领优惠券：</div>
+      <div  @click='GoDisCount' >
+       <div class=" row_flex">
+        <div>
+          <div class='dis_height' v-show='str_coupon_shop' >
+            <span class='dis_info' >店铺劵</span>
+            <span class='dis_info_sp' >{{str_coupon_shop}}</span>
+          </div>
+          <div class='dis_height' v-show='str_coupon_good' >
+            <span class='dis_info' >商品劵</span>
+            <span class='dis_info_sp'>{{str_coupon_good}}</span>
+          </div>
+        </div>
+        <div class='coupon_row' >
+          <img class='dis_row' src="./imges/shop_skan.png" alt="">
+        </div>
+       </div>
+      </div>
+    </div>
+    <div class='col_flex product_review ' > 
+      <div class='row_flex  be_flex pro_duct_top' @click='GoProductReview' >
+        <div>商品评价（{{evaluation_count}}）</div>
+        <div class='row_flex be_flex al_flex' >
+          <span>查看全部</span>
+          <img class='product_review_row' src="./imges/product_review.png" alt="">
+        </div>
+      </div>
+      <div v-if ='evaluation_arr.length > 0' class='col_flex' >
+        <div class='row_flex al_flex product_review_con' >
+          <img class='product_review_head' src="./imges/my_head.png" alt="">
+          <span>{{evaluation_obj.product_evaluation_userName}}</span>
+        </div>
+        <div class='product_review_text' >
+          {{evaluation_obj.product_evaluation_description}}
+        </div>
+      </div>
+    </div>
+    <!-- 规格介绍 -->
+    <div class='details'>
+      <div class='det_photo'>
+        <img class='det_img' src='./imges/detail_top.png'></img>
+      </div>
+      <div class='det_footer'>
+        <div class='det_foot_items'>
+          <label class='le_left'>产品名称</label>
+          <span class='det_name'>{{GoodsInfo.goods_name}}</span>
+        </div>
+      </div>
+      <div class='det_footer'>
+        <div class='det_foot_items'>
+          <label class='le_left'>类型</label>
+          <span class='det_name'>{{GoodsInfo.good_type_one_name}}</span>
+        </div>
+      </div>
+      <div class='det_footer'>
+        <div class='det_foot_items'>
+          <label class='le_left'>商品单位</label>
+          <span class='det_name'>{{GoodsInfo.goods_unit_value}}{{GoodsInfo.goods_unit}}</span>
+        </div>
+      </div>
+    </div>
+    <!-- 展示图片 -->
+    <div class='show_photo'>
+      <div class="_div" v-for="(item,index) in detail_picture" :key="item.id">
+        <img class="banner_img " :src="item.goods_img_url" alt="">
+      </div>
+    </div>
+    <!-- 空白占位 -->
+    <div class="blank_holder"></div>
+
+    <div class='footer '>
+      <!-- 店铺样式 -->
+      <div class="foot  foot_left" @click="jumpShopIndex">
+        <img src="./imges/shop_name_one.png" alt="" class="foot_img">
+        <span class="foot_add_car">店铺</span>
+      </div>
+      <!-- 加入购物车图片 -->
+      <div class=' foot foot_left' @click='GoCar'>
+        <img class=' foot_img' src='./imges/shop_cart0.png'>
+        <span class='foot_add_car'>购物车</span>
+        <span class=' animated car_success'  >加入成功</span>
+        <span class='car_num' >{{goodsTypeCount}}</span>
+      </div>
+      <div @click='AddShopCar(GoodsSole.goods_id)' class=' foot foot_mid'>
+        加入购物车
+      </div>
+      <div @click='BuyNow' class='foot foot_right'>
+        立即购买
+      </div>
+    </div>
+
+    <!-- 立即购买的弹出层 <div wx:if="{{foot==1}}"> -->
+    <div v-if='foot' >
+      <div class='footer1'>         
+        <div class='footer_list'>
+          <div class='footer_item'>
+            <div>
+              <span class='foot_price'>￥{{GoodsSole.sale_price}}</span> （库存充足）
+            </div>
+            <div class='close_view'>
+              <img @click='Close' class='close' src='./imges/close.png'>
+            </div>
+          </div>
+          <div class='footer_item'>
+            <div>
+              数量
+            </div>
+            <div class='change_num'>
+              <img @click='numDown' class='change_item' src='./imges/cardown.png'>
+              <input v-model='ipt' v-on:input="inputFunc" class='change_item1' >
+              <img @click='numAdd' class='change_item' src='./imges/caradd.png'>
+            </div>
+          </div>
+          <div @click='buyNowGood' class='footer_buy'>
+            确认购买
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 优惠券的弹框 -->
+    <div class='_cou_panel' v-show='show_dis_pannel' >
+      <div class='dis_pannel'  >
+        <div class='row_flex cen_flex al_flex be_flex dis_use' >
+          <span>领优惠券</span>
+          <div class='col_flex al_flex cen_flex' @click='CloseDisPannel' >
+            <img class='dis_close' src="./imges/dis-close.png" alt="">
+          </div>
+        </div> 
+        <div class='coupon_pannel_list' >
+          <div class='dis_list'  v-if='shopCoupon_list.length > 0' v-for = 'item in shopCoupon_list' >
+            <div class='dis_item row_flex be_flex al_flex' v-bind:class=' item.coupon_send_status == "CLOSE" ? "go_userd_bg" : ""' >
+              <div class='col_flex ar_flex al_flex dis_item_left ' >
+                <span  > <i>￥</i> <span class='dis_item_money' >{{item.coupon_amount}}</span> </span>
+                <span>-- 店铺劵 --</span>
+              </div>
+              <div class='col_flex ar_flex al_flex dis_item_mid'>
+                <span v-if='item.coupon_use_condition' >满{{item.coupon_use_condition}}使用</span>
+                <span v-else >无门槛使用</span>
+                <span class='dis_item_date' >{{item.activity_end_time}} 过期</span>
+              </div>
+              <div @click='GoReceive(item.coupon_id)' class='col_flex ar_flex al_flex dis_item_right '>
+                <span v-if='item.coupon_send_status == "OPEN"' class='go_userd'  >立即领取</span>
+                <span v-else class='go_user' >已领取</span>
+              </div>
+            </div>
+          </div>
+          <div class='dis_list'  v-if='productCoupon_list.length > 0' v-for = 'item in productCoupon_list' >
+            <div class='dis_item row_flex be_flex al_flex ' v-bind:class=' item.coupon_send_status == "CLOSE" ? "go_userd_bg" : ""' >
+              <div class='col_flex ar_flex al_flex dis_item_left ' >
+                <span  > <i>￥</i> <span class='dis_item_money' >{{item.coupon_amount}}</span> </span>
+                <span>-- 商品劵 --</span>
+              </div>
+              <div class='col_flex ar_flex al_flex dis_item_mid'>
+                <span v-if='item.coupon_use_condition' >满{{item.coupon_use_condition}}使用</span>
+                <span v-else >无门槛使用</span>
+                <span class='dis_item_date' >{{item.activity_end_time}} 过期</span>
+              </div>
+              <div @click='GoReceive(item.coupon_id)' class='col_flex ar_flex al_flex dis_item_right '>
+                <span v-if='item.coupon_send_status == "OPEN"' class='go_userd'  >立即领取</span>
+                <span v-else class='go_user' >已领取</span>
+                <!-- <span  class='go_userd'  >立即领取</span> -->
+              </div>
+            </div>
+          </div>
+          <div v-else class='no_dis_count' >
+            该店铺暂无优惠券!
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+
+
+  <script src="./swipter/js/swiper.min.js"></script>
+  <script src="./js/GoodDetail.js"></script>
+</body>
+
+</html>

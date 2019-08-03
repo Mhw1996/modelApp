@@ -1,0 +1,210 @@
+body{
+  background-color: white
+}
+#app{
+  padding-top: 0.55rem
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.2rem 0 0.2rem;
+  align-items: center;
+  font-size: 0.18rem;
+  background-color: #fff;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0
+}
+.back,
+.search_scan {
+  width: 0.36rem;
+  height: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+}
+.back_row {
+  width: 0.12rem;
+  height: 0.2rem;
+}
+.ipt_sea {
+  width: 75%;
+  font-size: 0.18rem;
+  border: 0.01rem solid #eee;
+  border-radius: 0.2rem;
+  height: 0.3rem;
+  padding-left: 0.1rem;
+}
+.head_search {
+  width: 0.26rem;
+  height: 0.26rem;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 0.45rem;
+  background-color: #fff;
+  font-size: 0.16rem;
+  position: fixed;
+  width: 100%;
+  top: 0.4rem;
+  left: 0;
+}
+
+.nav_name {
+  height: 0.250rem;
+  border-bottom: 0.01rem solid transparent;
+}
+
+.nav_name_act {
+  border-bottom: 0.01rem solid #e61e56;
+}
+
+.go_shop{
+  width: 0.6rem;
+  height: 0.3rem;
+  border-radius: 18px;
+  border: solid 1px #dddddd;
+  text-align: center;
+  line-height: 0.3rem;
+}
+.good_img{
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 0.05rem;
+}
+.dis_bor{
+  background-image: url('../imges/dis-good.png');
+  height: 1rem;
+  font-size: 0.14rem;
+  /* background-image: url('../imges/dis-nouse.png'); */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin: 0.15rem 0.05rem;
+  color: #ca224f;
+}
+.good_name{
+  width: 98%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient: vertical;
+  color: #333
+}
+.good_money{
+  font-size: 0.24rem;
+}
+.goods_money{
+  width: 100%;
+}
+.goods_date{
+  width: 95%;
+  color: #424242;
+  font-size: 0.14rem;
+
+}
+.usering{
+  background-color: #e61e56;
+  color: white;
+  border-radius: 0.15rem;
+  vertical-align: middle;
+  height: 0.24rem;
+  width: 0.7rem;
+  text-align: center;
+  line-height: 0.24rem;
+}
+/* 暂无商品去首页 */
+.index{
+  width: 100%;
+  height: 2rem;
+  line-height: 2rem;
+  color: #999;
+  text-align: center;
+  font-size: 0.2rem;
+}
+
+
+.shop_img{
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: 0.1rem;
+  margin-right: 0.15rem;
+  border-radius: 0.05rem;
+}
+.list{
+  font-size: 0.14rem;
+  color: #424242;
+  margin-bottom: 0.1rem;
+}
+
+.all_list{
+  margin-top: 0.3rem;
+  padding: 0 0.1rem;
+  background: white;
+  padding-bottom: 0.1rem;
+}
+
+.dis_list{
+  padding:0 0.1rem;
+}
+.dis_item{
+  height: 1rem;
+  font-size: 0.14rem;
+  background-image: url('../imges/dis-nouse.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin: 0.15rem 0.05rem;
+  color: #ca224f;
+}
+.dis_item_left{
+  width: 25%;
+}
+.dis_item_mid{
+  width: 50%;
+}
+.dis_item_right{
+  width: 25%
+}
+.dis_item_date{
+  width: 55%;
+  color: #424242;
+  font-size: 0.14rem;
+}
+.dis_item_money{
+  font-size: 0.3rem;
+}
+.go_user{
+  padding: 0.05rem 0.1rem;
+  border-radius: 0.18rem;
+  background-color: #e61e56;
+  color: white;
+  font-size: 0.12rem;
+}
+.go_userd_bg{
+  background-image: url('../imges/dis-used.png');
+}
+.go_userd{
+  padding: 0.05rem 0.1rem;
+  border-radius: 0.18rem;
+  border: 0.01rem solid #ca224f;
+  color: #ca224f;
+  font-size: 0.12rem;  
+}
+.act_tab{
+  color: #ca224f;
+  font-size: 0.18rem;
+}
+/* 加载更多 */
+.data_more{
+  font-size: 0.12rem;
+  height: 0.5rem;
+  line-height: 0.5rem;
+  width: 100%;
+  text-align: center;
+  color: #ccc7c7
+}

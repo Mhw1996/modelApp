@@ -1,0 +1,78 @@
+header{
+  width: 100%;
+  height: 0.5rem;
+  position: fixed;
+  background: rgb(255, 255, 255);
+
+}
+.myheader{
+  height: 0.5rem;
+  width: 100%;  
+  display: flex;
+  justify-content: space-around;  
+  align-items:center; 
+}
+.back{
+	width: 0.10rem ;
+	height: 0.22rem;
+  vertical-align: middle;
+  padding-left: 0.1rem;
+}
+.search{
+	background: rgba(214, 214, 214, 0.4) url(../imges/search_black.png) no-repeat;
+	background-size: 0.2rem 0.2rem;
+	background-position: 0.1rem;
+	border-radius: 1rem;
+	border: 0px;
+	width: 2.33rem;
+  height: 0.33rem;
+  padding-left: 0.38rem;
+}
+input::-webkit-input-placeholder { 
+	color: rgb(134, 134, 134);
+	font-size: 0.16rem;
+	font-family: PingFang-SC-Medium;
+}
+input:-o-placeholder { 
+	color: rgb(134, 134, 134);
+	font-size: 0.16rem
+}
+input::-moz-placeholder { 
+	color: rgb(134, 134, 134);
+	font-size: 0.16rem
+}	
+input::-ms-input-placeholder {
+	color: rgb(134, 134, 134);
+	font-size: 0.16rem
+}
+
+.searchcontent{
+  background: rgb(255, 255, 255)
+}
+.noShopPro{
+  text-align: center;
+  padding:1rem  0.1rem;
+}
+.noShopPro img{
+  width: 0.8rem;
+}
+.noShopPro p{
+  padding-top: 0.1rem; 
+}
+.NoSearchTiptext{
+  padding-top: 0.1rem;   
+  font-size: 0.2rem;
+  color: rgb(32, 32, 32);
+}
+.search_pro{
+  background: #f7f7f8
+}
+/* 切换搜索方式时的颜色 */
+.isColor{
+  color: #e61e56;
+}
+/* 没有搜索到任何商品 */
+.noShopPro{
+	background: #fff;
+}
+ 
